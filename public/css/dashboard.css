@@ -1,0 +1,163 @@
+body {
+  font-size: .875rem;
+}
+
+.feather {
+  width: 16px;
+  height: 16px;
+  vertical-align: text-bottom;
+}
+
+/*
+ * Sidebar
+ */
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 100;
+  /* Behind the navbar */
+  padding: 5em 0 0;
+  /* Height of navbar */
+  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+}
+
+.sidebar-sticky {
+  position: relative;
+  top: 0;
+  height: calc(100vh - 48px);
+  padding-top: .5rem;
+  overflow-x: hidden;
+  overflow-y: auto;
+  /* Scrollable contents if viewport is shorter than content. */
+}
+
+@supports ((position: -webkit-sticky) or (position: sticky)) {
+  .sidebar-sticky {
+    position: -webkit-sticky;
+    position: sticky;
+  }
+}
+
+.sidebar .nav-link {
+  font-weight: 500;
+  color: #333;
+}
+
+.sidebar .nav-link .feather {
+  margin-right: 4px;
+  color: #999;
+}
+
+.sidebar .nav-link.active {
+  color: #007bff;
+}
+
+.sidebar .nav-link:hover .feather, .sidebar .nav-link.active .feather {
+  color: inherit;
+}
+
+.sidebar-heading {
+  font-size: .75rem;
+  text-transform: uppercase;
+}
+
+/*
+ * Content
+ */
+
+[role="main"] {
+  padding-top: 5em;
+  /* Space for fixed navbar */
+}
+
+/*
+ * Navbar
+ */
+
+.navbar-brand {
+  padding-top: .75rem;
+  padding-bottom: .75rem;
+  font-size: 1rem;
+}
+
+.navbar .form-control {
+  padding: .75rem 1rem;
+  border-width: 0;
+  border-radius: 0;
+}
+
+.form-control-dark {
+  color: #fff;
+  background-color: rgba(255, 255, 255, .1);
+  border-color: rgba(255, 255, 255, .1);
+}
+
+.form-control-dark:focus {
+  border-color: transparent;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
+}
+
+#user {
+  text-align: right;
+}
+
+#userImg {
+  border-radius: 50%;
+  width: 5%;
+}
+
+#user .dropdown-menu {
+  left: auto;
+  right: 0;
+  text-align: right;
+  font-size: 0.875em;
+}
+
+.dropdown-toggle::after {
+  display: none
+}
+
+/*
+ * Utilities
+ */
+
+.border-top {
+  border-top: 1px solid #e5e5e5;
+}
+
+hr {
+  margin-top: 0 !important;
+}
+
+.my-4 {
+  margin-top: 0 !important;
+}
+
+.border-bottom {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+/*
+ * Tree View
+ */
+
+ul.tree {
+  list-style: none;
+  border-left: 1px solid rgba(0, 0, 0, .125);
+  margin-left: 1.75em;
+}
+
+li.tree-item {
+  cursor: pointer;
+  margin-left: -2.85em;
+  margin-right: 15rem;
+  border-bottom: 1px solid rgba(0, 0, 0, .125);
+}
+
+li.tree-item div {
+  top: 1em;
+  margin-left: 1em;
+}

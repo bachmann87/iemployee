@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../../../favicon.ico">
+
+    <title>iEmployee - Dashboard</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+
+    <!-- Bootstrap JavaScript-->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+
+    <!-- Custom styles for this template -->
+    <link href="http://localhost:8080/css/dashboard.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
+  </head>
+
+  <body>
+
+    <div class="col-md-9 ml-sm-auto col-lg-10 px-4">
+      <!-- Header -->
+      <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top shadow-sm">
+        <a class="navbar-brand" href="#">iEmployee</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#dashboardNavigation" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="dashboardNavigation">
+          <div class="nav navbar-nav mr-auto">
+            <a class="nav-item nav-link" href="http://localhost:8080/jobs/dashboard">Dashboard</a>
+            <a class="nav-item nav-link" href="http://localhost:8080/jobs/">Vakanzen</a>
+            <a class="nav-item nav-link" href="http://localhost:8080/jobs/">NLP-Interface</a>
+            <a class="nav-item nav-link" href="http://localhost:8080/jobs/">API-Intergration</a>
+            <a class="nav-item nav-link" href="http://localhost:8080/jobs/">Reports</a>
+          </div>
+          <div class="nav navbar-nav">
+            <div id="user" class="nav-item">
+              <a class="dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <!-- <img id="userImg" src="http://localhost:8080/img/Partner.png" class="img-fluid" alt=""> -->
+                <img id="userImg" src="/img/Partner2.png" class="img-fluid">
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" href="#">Postfach
+                  <span class="badge badge-secondary">9</span>
+                  <span class="sr-only">unread messages</span>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="/">Abmelden</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row">
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+          <div class="sidebar-sticky">
+            <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+              <span>Infrastructure</span>
+              <a class="d-flex align-items-center text-muted" href="#">
+                <span data-feather="plus-circle"></span>
+              </a>
+            </h6>
+            <ul class="nav flex-column">
+              <li class="nav-item">
+                <a class="nav-link" href="/jobs/dashboard">
+                  <span data-feather="layout"></span>
+                  Dashboard<span class="sr-only">(current)</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a id="showVacancy" class="nav-link" href="#"><span data-feather="database"></span> Vakanzen</a>
+                <ul id="treeVacancy" class="tree">
+                  <li class="tree-item"><div class="">Übersicht</div></li>
+                  <li id="addVacancy" class="tree-item" data-toggle="modal" data-target="#add_vacancies"><div class="">Hinzufügen</div></li>
+                  <li class="tree-item"><div class="">Löschen</div></li>
+                  <li class="tree-item"><div class="">Aktualisieren</div></li>
+                </ul>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <span data-feather="cpu"></span>
+                  NLP-Interface
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <span data-feather="layers"></span>
+                  API-Integration
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <span data-feather="bar-chart-2"></span>
+                  Reporting
+                </a>
+              </li>
+            </ul>
+
+            <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+              <span>Dateisystem</span>
+              <a class="d-flex align-items-center text-muted" href="#">
+                <span data-feather="plus-circle"></span>
+              </a>
+            </h6>
+            <ul class="nav flex-column mb-2">
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <span data-feather="file-text"></span>
+                  Current month
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <span data-feather="file-text"></span>
+                  Last quarter
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <span data-feather="file-text"></span>
+                  Social engagement
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <span data-feather="file-text"></span>
+                  Year-end sale
+                </a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+            <h1 class="h2">John Doe</h1>
+            <div class="btn-toolbar mb-2 mb-md-0">
+              <div class="btn-group mr-2">
+                <button class="btn btn-sm btn-outline-secondary">Share</button>
+                <button class="btn btn-sm btn-outline-secondary">Exportieren</button>
+              </div>
+              <button class="btn btn-sm btn-outline-secondary dropdown-toggle">
+                <span data-feather="calendar"></span>
+                Diese Woche
+              </button>
+            </div>
+          </div>
+
+{{!-- <div class="row">    
+    <div class="col"> 
+        <div class="card">           
+            <div class="card-body bg-primary text-white">
+                <div class="row">
+                    <div class="col">
+                        <i class="fa fa-users fa-4x" aria-hidden="true"></i>
+                    </div>
+                    <div class="col">
+                        <h2 class="card-title">238</h2>
+                        <p>Users Online</p>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="card-footer">
+                <a href="#" class="text-dark">Link To Data 
+                &nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+            </div>
+        </div>
+    </div>
+    <div class="col"> 
+        <div class="card">           
+            <div class="card-body bg-success text-white">
+                <div class="row">
+                    <div class="col">
+                        <i class="fa fa-envelope fa-4x" aria-hidden="true"></i>
+                    </div>
+                    <div class="col">
+                        <h2 class="card-title">21</h2>
+                        <p>Messages</p>
+                    </div>
+                </div>                
+            </div>
+            <div class="card-footer">
+                <a href="#" class="text-dark">Link To Data 
+                &nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+            </div>
+        </div>
+    </div>
+    <div class="col"> 
+        <div class="card">           
+            <div class="card-body bg-dark text-white">
+                <div class="row">
+                    <div class="col">
+                        <i class="fa fa-line-chart fa-4x" aria-hidden="true"></i>
+                    </div>
+                    <div class="col">
+                        <h2 class="card-title">5</h2>
+                        <p>Metrics</p>
+                    </div>
+                </div>                
+            </div>
+            <div class="card-footer">
+                <a href="#" class="text-dark">Link To Data 
+                &nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+            </div>
+        </div>
+    </div>
+    <div class="col"> 
+        <div class="card">           
+            <div class="card-body bg-danger text-white">
+                <div class="row">
+                    <div class="col">
+                            <i class="fa fa-exclamation-triangle fa-4x" aria-hidden="true"></i>
+                    </div>
+                    <div class="col">
+                        <h2 class="card-title">5</h2>
+                        <p>Errors</p>
+                    </div>
+                </div>                
+            </div>
+            <div class="card-footer">
+                <a href="#" class="text-dark">Link To Data 
+                &nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+            </div>
+        </div>
+    </div>
+</div>           --}}
+
+          <div id="chart" class="my-4 w-100">
+            <div class="">
+              <h5>Reporting für offene Vakanzen</h5>
+              <hr class="my-4">
+            </div>
+            <canvas id="myChart" width="900" height="380"></canvas>
+          </div>
+
+          <div id="applicants" class="my-4 w-100">
+            <div class="">
+              <h5>Vakanzen</h5>
+              <hr class="my-4">
+            </div>
+            <div class="table-responsive">
+              <table class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th>Bearbeiten</th>
+                    <th>Vakanz</th>
+                    <th>Arbeitsort</th>
+                    <th>Pensum</th>
+                    <th>Tags</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {{# vacancies}}
+                  <tr>
+                    <td><a href="" data-id="{{_id}}" class="btn btn-sm btn-info" data-toggle="modal" data-target="#edit_vacancies">Bearbeiten</a></td>
+                    <td>{{title}}</td>
+                    <td>{{location}}</td>
+                    <td>{{fte}}%</td>
+                    <td>{{# tags}} {{[]}}, {{/ tags}}</td>
+                  </tr>
+                  {{/ vacancies}}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div id="vacancies" class="my-4 w-100">
+            <div class="">
+              <h5>Vakanzen hinzufügen</h5>
+              <hr class="my-4">
+            </div>
+
+          </div>
+        </main>
+      </div>
+    </div>
+
+    {{!-- Modal: Edit Vacancies --}}
+    <div class="modal" id="edit_vacancies" tabindex="-1" role="dialog" aria-labelledby="edit_vacancies" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            ...
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {{!-- Modal: Add Vacancies --}}
+    <div class="modal" id="add_vacancies" tabindex="-1" role="dialog" aria-labelledby="add_vacancies" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Vakanz hinzufügen</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form action="/jobs/add" method="post">
+              <!-- Titel -->
+              <div class="form-group">
+                <label for="title">Titel</label>
+                <input type="text" class="form-control" name="title" placeholder="Vakanz">
+              </div>
+              <!-- Beschreibung -->
+              <div class="form-group">
+                <label for="description">Beschreibung</label>
+                <textarea type="text" class="form-control form-control-success" name="description" placeholder="Stellenbeschreibung"></textarea>
+              </div>
+              <!-- FTE -->
+              <div class="form-group has-success">
+                <label for="fte">Arbeitspensum (FTE)</label>
+                <input type="text" class="form-control" name="fte" placeholder="Arbeitspensum (z.b. 0.8)">
+              </div>
+              <!-- Arbeitsort -->
+              <div class="form-group">
+                <label for="location">Arbeitsort</label>
+                <input type="text" class="form-control" name="location" placeholder="Arbeitsort">
+              </div>
+              <!-- Tags -->
+              <div class="form-group">
+                <label for="tags">Stichworte</label>
+                <input type="text" class="form-control" name="tags" placeholder="Tags">
+                <small>Stichworte mit Komma trennen</small>
+              </div>
+              {{!-- Footer --}}
+              <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-sm btn-primary" name="submit">Vakanz hinzufügen</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>     
+
+    <script type="text/javascript">
+
+    const addVacancy = document.querySelector('#addVacancy');
+    var treeVacancy = document.querySelector('#treeVacancy').style.display = 'none';
+
+    /* addVacancy.addEventListener('click', function() {
+      let chart = document.querySelector('#chart').style.display = 'none';
+      let applicants = document.querySelector('#applicants').style.display = 'none';
+      const vacancies = document.querySelector('#vacancies').style.display = 'block';
+    }); */
+
+    const showVacancy = document.querySelector('#showVacancy');
+    showVacancy.addEventListener('click', function() {
+      const treeVacancy = document.querySelector('#treeVacancy');
+      // Check state
+      if(treeVacancy.style.display === 'block') {
+        treeVacancy.style.display = 'none';
+      } else {
+        treeVacancy.style.display = 'block';
+      }
+    });
+
+    </script>
+
+    <!-- Icons -->
+    <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+    <script>
+      feather.replace()
+    </script>
+
+    <!-- Graphs -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+    <script>
+      var ctx = document.getElementById("myChart");
+      var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: [
+          {{# vacancies}}
+          "{{title}}", 
+          {{/ vacancies}}
+          ],
+          datasets: [{
+            data: [6, 28, 18],
+            lineTension: 0,
+            backgroundColor: '#64b5f6',
+            pointBackgroundColor: '#007bff'
+          }]
+        },
+        options: {
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero: false
+              }
+            }]
+          },
+          legend: {
+            display: false,
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

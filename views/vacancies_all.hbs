@@ -1,0 +1,96 @@
+<!-- Header -->
+<nav class="navbar navbar-expand-lg navbar-light shadow-sm">
+  <a class="navbar-brand" href="#">iEmployee</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNavigation" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="mainNavigation">
+    <div class="navbar-nav mr-auto">
+      <a class="nav-item nav-link" href="http://localhost:8080/">Home</a>
+      <a class="nav-item nav-link" href="http://localhost:8080/jobs/">Vakanzen</a>
+    </div>
+    <div class="navbar-nav">
+      <a class="btn btn-sm btn-info text-white" href="/">Logout</a>
+    </div>
+  </div>
+</nav>
+
+
+<section style="padding-top: 5em;">
+  <div class="container">
+    <div class="display-4">Jobcenter</div>
+    <hr class="my-4">
+    <div class="lead">Hier finden Sie alle offenen Vakanzen</div>
+  </div>
+</section>
+
+<section id="jobs">
+  <div class="container">
+    <h1 class="section-title">Vakanzen</h1>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="form-group">
+          <select class="selectpicker form-control" title="Arbeitspensum" data-style="btn-outline-info">
+            <option>Vollzeit</option>
+            <option>Teilzeit</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <select class="selectpicker form-control" title="Jobgebiet" data-style="btn-outline-info">
+            <option>ICT</option>
+            <option>Marketing</option>
+            <option>Human Resources</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <select class="selectpicker form-control" title="Kanton/Land" data-style="btn-outline-info">
+            <optgroup label="Zürich">
+                <option>Horgen</option>
+                <option>Wädenswil</option>
+                <option>Zürich Oerlikon</option>
+              </optgroup>
+              <optgroup label="Graubünden">
+                <option>Chur</option>
+              </optgroup>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div id="vacancies" class="list-group">
+          <!-- Job: -->
+          {{# vacancies}}
+          <a href="/jobs/view/{{_id}}" class="list-group-item list-group-item-action">
+            <div class="data-wrapper">
+              <span class="job-date float-right">2 days ago</span>
+              <div class="job-title">{{title}}</div>
+              <div class="job-fte">{{location}}, {{fte}}%</div>
+              <div class="section-lead">{{body}}</div>
+              <div class="job-tags">
+                {{# tags}}
+                  <span class="badge badge-pill badge-info">{{[]}}</span>
+                {{/ tags }}
+              </div>
+            </div>
+          </a><!-- List-group-item  -->
+          {{/ vacancies }}
+        </div><!-- List-group  -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<script type="text/javascript">
+$(document).ready(function() {
+
+  // Init Select
+  $('.selectpicker').selectpicker();
+
+
+});
+</script>

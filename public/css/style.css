@@ -1,0 +1,501 @@
+html, body, main {
+  font-family: 'Roboto';
+  font-weight: 300;
+  background-color: #fff;
+  height: 100%;
+}
+
+section {
+  z-index: 0 !important;
+  /* height: 100vh; */
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #6c757d;
+}
+
+/* MDB-Extension */
+.view {
+  position: relative;
+  cursor: default;
+}
+
+.view .mask {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  background-attachment: fixed;
+}
+.view .full-bg-img, .view .full-bg-img video {
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+}
+
+.view .full-bg-img, .view .mask {
+  height: 100%;
+}
+
+.view, .view .mask, .waves-effect {
+  overflow: hidden;
+}
+
+.rgba-black-strong {
+  background-color: rgba(0,0,0,.7);
+}
+
+/* Custom Styles */
+#ipad {
+  position: absolute;
+  max-width: 65%;
+  right: 0;
+  bottom: 0;
+}
+
+#brandname {
+  font-family: 'Montserrat', sans-serif;
+}
+
+#topNav {
+  height: 20px !important;
+  background-color: #626262;
+  /* position: fixed; */
+  margin-bottom: 0;
+  top: 0;
+  left: 0;
+}
+
+#phone {
+  padding-right: 0.5em;
+}
+
+#secondNav {
+  height: 2px !important;
+  background-color: #90caf9;
+  padding: 0;
+  position: fixed;
+  margin-bottom: 0;
+  top: 20px;
+  left: 0;
+}
+
+#reservation-bar {
+  font-size: .65em;
+  color: #FFF;
+}
+
+.nav-link {
+  padding-right: 1rem !important;
+}
+
+.affix {
+  position: fixed;
+  top: 20px;
+  right: 0;
+  left: 0;
+  z-index: 1030;
+}
+
+/* fixed to top styles */
+
+.affix.navbar {
+  background-color: #333;
+}
+
+.affix.navbar .nav-item>a, .affix.navbar .navbar-brand {
+  color: #fff;
+}
+
+header {
+  position: relative;
+  height: 100%;
+  background: #ccc;
+}
+
+.navbar {
+  /* -webkit-box-shadow: -8px 4px 47px -3px rgba(0,0,0,0.32);
+  -moz-box-shadow: -8px 4px 47px -3px rgba(0,0,0,0.32);
+  box-shadow: -8px 4px 47px -3px rgba(0,0,0,0.32); */
+  /* background-color: #90caf9; */
+  transition: all 0.3s ease-out;
+}
+
+#scrollArrow {
+  color: #2196F3;
+  cursor: pointer;
+}
+
+.tech-text {
+  padding-top: 1.5em;
+  font-size: .6em;
+}
+
+.trademark {
+  font-size: 0.5em;
+}
+
+.jumbo-wrapper {
+  background-image: url('/img/bg3.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+}
+
+.item {
+  cursor: pointer;
+  height: 200px;
+  font-size: 14px;
+  background-color: #2196F3;
+  padding-bottom: 1em;
+}
+
+.item-text {
+  color: white;
+  font-size: 1em;
+  text-align: center;
+  padding: 2em;
+}
+
+.icon {
+  color: #FFF;
+  padding-bottom: 2em;
+}
+
+#myBtn {
+  display: none;
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  z-index: 99;
+  border: none;
+  border-radius: 50%;
+  outline: none;
+  background-color: #2196F3;
+  color: white;
+  cursor: pointer;
+  padding: 0.6em 1em 0.6em 1em;
+  font-size: 1em;
+}
+
+#myBtn:hover {
+  background-color: #2196F3;
+}
+
+/* Jumbotron Background */
+
+.blue-gradient {
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#2196f3+0,64b5f6+100 */
+  background: #2196f3;
+  /* Old browsers */
+  background: -moz-linear-gradient(45deg, #2196f3 0%, #64b5f6 100%);
+  /* FF3.6-15 */
+  background: -webkit-linear-gradient(45deg, #2196f3 0%, #64b5f6 100%);
+  /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(45deg, #2196f3 0%, #64b5f6 100%);
+  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2196f3', endColorstr='#64b5f6', GradientType=1);
+  /* IE6-9 fallback on horizontal gradient */
+}
+
+footer {
+  /* position: fixed; */
+  width: 100%;
+}
+
+#footer-sub {
+  background-color: #eeeeee;
+  padding-top: 2em;
+  padding-bottom: 2em;
+  font-size: 0.8em;
+  line-height: 0.8em;
+}
+
+#footer-lead {
+  padding-top: 3em;
+  padding-bottom: 3em;
+  background-color: #fafafa;
+}
+
+.footer-link {
+  padding-right: 0.5em;
+  color: #9e9e9e;
+  text-decoration: underline #9e9e9e;
+}
+
+.footer-nav {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.section-title {
+  /* font-family: 'Montserrat', sans-serif; */
+  font-weight: 300;
+  color: #64b5f6;
+  margin-bottom: 0.2em;
+}
+
+.section-sub {
+  font-weight: 300;
+  font-size: 1.5em;
+  color: #9e9e9e;
+}
+
+.section-lead {
+  padding-top: 1em;
+  padding-bottom: 1em;
+  font-weight: 300;
+  font-size: 1em;
+  color: #9e9e9e;
+}
+
+#voices {
+  padding-top: 4em;
+  padding-bottom: 4em;
+  background-color: #fafafa;
+}
+
+#twitter {
+  background-color: #fafafa;
+  padding-bottom: 3em;
+}
+
+#product {
+  padding-bottom: 3em;
+}
+
+#iemployee {
+  padding-bottom: 4em;
+}
+
+#banner {
+  padding-top: 4em;
+  padding-bottom: 4em;
+}
+
+#applicationForm {
+  padding-top: 4em;
+  padding-bottom: 4em;
+}
+
+.brand-divider {
+  padding-top: 3em;
+  padding-bottom: 3em;
+}
+
+.jumbotron {
+  box-shadow: 0;
+  margin-bottom: 0;
+}
+
+/* ------------------ */
+
+/*      Jobs:         */
+
+/* ------------------ */
+
+#jobs {
+  padding-top: 3em;
+  padding-bottom: 3em;
+}
+
+#vacancies {
+  cursor: pointer;
+}
+
+.btn-outline-info.dropdown-toggle {
+  background-color: #fff !important;
+  box-shadow: none;
+  color: #777 !important;
+  border: 1px solid rgba(0, 0, 0, .125) !important;
+  text-transform: none;
+}
+
+.btn-outline-info.dropdown-toggle:hover {
+  background-color: #fff !important;
+  box-shadow: none;
+  color: #000 !important;
+  border: 1px solid rgba(0, 0, 0, .125) !important;
+}
+
+.badge {
+  box-shadow: none;
+  font-weight: 300;
+}
+
+.job-title {
+  font-size: 1.5em;
+  font-weight: 300;
+  color: #64b5f6;
+}
+
+.job-title:hover {
+  color: #64b5f6;
+}
+
+.job-fte {
+  color: #9e9e9e;
+  line-height: 0.9em;
+  font-size: 0.9em;
+}
+
+.job-date {
+  color: #9e9e9e;
+  line-height: 0.9em;
+  font-size: 0.9em;
+}
+
+/* ------------------ */
+
+/*      Twitter       */
+
+/* ------------------ */
+
+.twitter-wrapper {
+  border: 1px solid #eeeeee;
+  margin-bottom: .5em;
+  color: #9e9e9e;
+}
+
+.twitter-content {
+  padding: 1em;
+}
+
+.twitter-date {
+  font-size: 0.75em;
+}
+
+.twitter-post {
+  font-size: 1em;
+}
+
+.twitter-link {
+  color: #64b5f6;
+}
+
+/* ------------------ */
+
+/*      Progress      */
+
+/* ------------------ */
+
+#preloader {
+  height: 100%;
+  background-color: #fff;
+}
+
+.progress-loader {
+  width: 100%;
+  background-color: #9e9e9e;
+}
+
+#progressBar {
+  width: 1%;
+  height: 5px;
+  background-color: #64b5f6;
+}
+
+/* ------------------ */
+
+/*      Media         */
+
+/* ------------------ */
+
+#media {
+  height: 100%;
+}
+
+#myVideo {
+  position: relative;
+  right: 0;
+  bottom: 0;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.media-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #333;
+  opacity: 0.5;
+}
+
+/* Bootstrap Select Fix */
+
+/*
+Make bootstrap-select work with bootstrap 4 see:
+https://github.com/silviomoreto/bootstrap-select/issues/1135
+*/
+
+.dropdown-toggle.btn-default {
+  color: #292b2c;
+  background-color: #fff;
+  border-color: #ccc;
+}
+
+.bootstrap-select.show>.dropdown-menu>.dropdown-menu {
+  display: block;
+}
+
+.bootstrap-select>.dropdown-menu>.dropdown-menu li.hidden {
+  display: none;
+}
+
+.bootstrap-select>.dropdown-menu>.dropdown-menu li a {
+  display: block;
+  width: 100%;
+  padding: 3px 1.5rem;
+  clear: both;
+  color: #292b2c;
+  text-align: inherit;
+  white-space: nowrap;
+  background: 0 0;
+  border: 0;
+}
+
+.dropdown-menu>li.active>a {
+  color: #fff !important;
+  background-color: #337ab7 !important;
+}
+
+.bootstrap-select .check-mark::after {
+  content: "✓";
+}
+
+.bootstrap-select button {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Make filled out selects be the same size as empty selects */
+
+.bootstrap-select.btn-group .dropdown-toggle .filter-option {
+  display: inline !important;
+}
+
+/* ------------------ */
+
+/*      Queries       */
+
+/* ------------------ */
+
+@media (max-width: 576px) {
+  header {
+    position: relative;
+    height: 100vh;
+    background: #ccc;
+  }
+  #brand {
+    width: 100%;
+    padding-top: 5em;
+  }
+  #ipad {
+    position: absolute;
+    max-width: 100%;
+    right: 0;
+    bottom: 0;
+  }
+}
