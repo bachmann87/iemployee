@@ -1,0 +1,46 @@
+<section id="editVacancies" style="padding-top: 3em;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="h2">Vakanz bearbeiten</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                {{# vacancies}}
+                <form action="/jobs/edit/{{_id}}" method="post">
+                <!-- Titel -->
+                <div class="form-group">
+                    <label for="title">Titel</label>
+                    <input type="text" class="form-control" name="title" placeholder="Vakanz" value="{{title}}">
+                </div>
+                <!-- Beschreibung -->
+                <div class="form-group">
+                    <label for="description">Beschreibung</label>
+                    <textarea type="text" class="form-control form-control-success" name="description" placeholder="Stellenbeschreibung">{{body}}</textarea>
+                </div>
+                <!-- FTE -->
+                <div class="form-group">
+                    <label for="fte">Arbeitspensum (FTE)</label>
+                    <input type="text" class="form-control" name="fte" placeholder="Arbeitspensum (z.b. 0.8)" value="{{fte}}">
+                </div>
+                <!-- Arbeitsort -->
+                <div class="form-group">
+                    <label for="location">Arbeitsort</label>
+                    <input type="text" class="form-control" name="location" placeholder="Arbeitsort" value="{{location}}">
+                </div>
+                <!-- Tags -->
+                <div class="form-group">
+                    <label for="tags">Stichworte</label>
+                    <input type="text" class="form-control" name="tags" placeholder="Tags" value="{{# tags}}{{[]}}, {{/ tags}}">
+                    <small>Stichworte mit Komma trennen</small>
+                </div>
+                {{!-- Footer --}}
+                <a href="/jobs/dashboard" class="btn btn-sm btn-secondary">Zurück ohne speichern</a>
+                <button type="submit" class="btn btn-sm btn-primary" name="submit">Vakanz aktualisieren</button>
+                </form>
+                {{/ vacancies}}
+            </div>
+        </div>
+    </div>
+</section>

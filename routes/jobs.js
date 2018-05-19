@@ -68,29 +68,93 @@ router.get('/', function(req, res, next) {
 
 });
 
+
 /**
  * Type: GET
  * View: Single Job Listing
  * Scope: Applicant
  */
 router.get('/view/:id', function(request, response, next) {
-
+  // Store Id
   let ObjId = request.params.id;
-
   // Query Data
   Vacancie.findOne({_id: ObjId}, function(err, vacancies) {
-  
     // Check for Errors
     if (err) {
       util.log(chalk.green.bold(err));
       // throw err;
     } else {
-      response.render('vacancies_single', {
-        title: 'iEmployee - Single View',
-        vacancies: vacancies
-      });
-    }
+        response.render('vacancies_single', {
+          title: 'iEmployee - Single View',
+          vacancies: vacancies
+        });
+      }
+  });
+});
+
+
+/**
+ * Type: GET
+ * View: Single Job Listing
+ * Scope: Employer
+ */
+router.get('/edit/:id', function(request, response) {
+  // Store Id
+  let ObjId = request.params.id;
+  // Query Data
+  Vacancie.findOne({_id: ObjId}, function(err, vacancies) {
+    // Check for Errors
+    if (err) {
+      util.log(chalk.green.bold(err));
+      // throw err;
+    } else {
+        response.render('vacancies_edit', {
+          title: 'iEmployee - Edit View',
+          vacancies: vacancies
+        });
+      }
+  });
+});
+
+
+/**
+ * Type: POST
+ * View: Single Job Edit
+ * Scope: Employer
+ */
+router.post('/edit/:id', function(request, response) {
   
+  // Store Id
+  let ObjId = request.params.id;
+
+  // Convert Tags String to Array
+  let str = request.body.tags;
+  let tags = str.split(',');
+
+  // Create Doc for MongoDB
+  let vacancie = {};
+  
+  // Add Data to Doc
+  vacancie.title = request.body.title;
+  vacancie.fte = request.body.fte;
+  vacancie.body = request.body.description;
+  vacancie.location = request.body.location;
+  vacancie.tags = tags;
+
+  // Query
+  let query = {_id: ObjId};
+
+  // Update Document in MongoDB
+  Vacancie.update(query, vacancie, function(err) {
+    // Check if error
+    if(err) {
+      // Errorhandler
+      console.log(err);
+      response.sendStatus(403);
+    } else {
+        // Redirect to Edit form
+        response.redirect('/jobs/edit/'+ObjId);
+      }
   });
 
 });
@@ -100,7 +164,7 @@ router.get('/view/:id', function(request, response, next) {
  * View: Application Form
  * Scope: Applicant
  */
-router.get('/apply/:id', function(request, response, next) {
+router.get('/apply/:id', function(request, response) {
 
   // Store Id
   let jobId = request.params.id;
@@ -112,6 +176,7 @@ router.get('/apply/:id', function(request, response, next) {
   });
 
 });
+
 
 /**
  * Type: GET
