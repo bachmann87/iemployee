@@ -32,15 +32,51 @@
                 <!-- Tags -->
                 <div class="form-group">
                     <label for="tags">Stichworte</label>
-                    <input type="text" class="form-control" name="tags" placeholder="Tags" value="{{# tags}}{{[]}}, {{/ tags}}">
+                    <input type="text" class="form-control" name="tags" placeholder="Tags" value="{{# tags}} {{[]}}, {{/ tags}}">
                     <small>Stichworte mit Komma trennen</small>
                 </div>
                 {{!-- Footer --}}
-                <a href="/jobs/dashboard" class="btn btn-sm btn-secondary">Zurück ohne speichern</a>
-                <button type="submit" class="btn btn-sm btn-primary" name="submit">Vakanz aktualisieren</button>
+                <div class="form-group row justify-content-between">
+                    <div class="col-md-4">
+                        <a href="/jobs/dashboard" class="btn btn-sm btn-secondary">Zurück ohne speichern</a>
+                        <button type="submit" class="btn btn-sm btn-primary" name="submit">Vakanz aktualisieren</button>                        
+                    </div>
+                    <div class="col-md-4 text-right">
+                        <a href="" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#delete_vacancy">Vakanz löschen</a>
+                    </div>
+                </div>
                 </form>
                 {{/ vacancies}}
             </div>
         </div>
     </div>
 </section>
+
+{{!-- Modal --}}
+<div class="modal" id="delete_vacancy" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title lead" id="exampleModalCenterTitle">Vakanz löschen</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="padding: 0; margin: 0;">
+        <div class="container-fluid" style="padding: 0; margin: 0;">
+            <div class="alert alert-danger align-items-center" style="margin: 0; border-radius: 0;">
+                <i class="fas fa-exclamation-triangle fa-2x"></i> 
+                <span>Dies kann nicht rückgängig gemacht werden</span>
+            </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Schliessen</button>
+        <a href="" class="btn btn-sm btn-danger">Ja, Vakanz löschen</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{!-- JavaScript --}}
+<script type="text/javascript" src="/js/delete.js"></script>

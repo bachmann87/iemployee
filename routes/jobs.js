@@ -5,6 +5,7 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var chalk = require('chalk');
 var logSymbols = require('log-symbols');
+const {check, validationResult} = require('express-validator/check');
 
 // Core Modules
 var fs = require('fs');
@@ -129,6 +130,7 @@ router.post('/edit/:id', function(request, response) {
 
   // Convert Tags String to Array
   let str = request.body.tags;
+  str.trim();
   let tags = str.split(',');
 
   // Create Doc for MongoDB
@@ -153,7 +155,7 @@ router.post('/edit/:id', function(request, response) {
       response.sendStatus(403);
     } else {
         // Redirect to Edit form
-        response.redirect('/jobs/edit/'+ObjId);
+        response.redirect('/jobs/dashboard/');
       }
   });
 
@@ -190,44 +192,103 @@ router.get('/dashboard', function(req, res, next) {
     // Errorhandler
     if (err) {
       util.log(chalk.blue.bold(err));
-      // throw err;
     } else {
+      // Cast Obj
+      let keys = Object.keys(vacancies);
+      let datasetJobs = [];
+      let dataset1 = [];
+      let dataset2 = [];
+      // Iterate to Doc
+      for(let i=0;i<keys.length;i++) {
+        dataset1.push(Math.ceil(Math.random()*100));
+        dataset2.push(Math.ceil((Math.random()*20)*-1));
+        datasetJobs.push(vacancies[i].title);
+      }
       // Render Page
       res.render('dashboard', {
         layout: false,
         title: 'iEmployee - Dashboard',
-        vacancies: vacancies
+        vacancies: vacancies,
+        jobs: datasetJobs,
+        index_1: dataset1,
+        index_2: dataset2
       });
     }
   });
 
 });
 
-router.post('/add', urlencodedParser, function(request, response, next) {
+router.post('/add', urlencodedParser, [
+  check('title', 'Bitte geben Sie der Vakanz einen Titel.').not().isEmpty().isString(),
+  check('description', 'Bitte geben Sie eine Beschreibung an.').isString(),
+  check('fte', 'Ungültiger Beschäftigungsgrad. Zahl zwischen 0.00 und 1.00').not().isEmpty().isString(),
+  check('location', 'Bitte wählen Sie eine gültige Niederlassung.').not().isEmpty().isString(),
+  check('tags', 'Bitte geben Sie mind. ein Stichwort an.').not().isEmpty().isString()
+], (request, response, next) => {
 
-  // Convert Tags String to Array
-  let str = request.body.tags;
-  let tags = str.match(/\w+(?:\w+.\w+)|\w+/g);
+  // Init Errorhandler
+  var errors = validationResult(request);
 
-  // Prepare Data for MongoDB
-  let vacancie = new Vacancie();
-  vacancie.title = request.body.title;
-  vacancie.fte = request.body.fte;
-  vacancie.body = request.body.description;
-  vacancie.location = request.body.location;
-  vacancie.tags = tags;
+  // Check for Errors
+  if (!errors.isEmpty()) {
 
-  // Save Document to MongoDB
-  vacancie.save(function(err) {
-    if (err) {
-      console.log(err);
-      return
-    } else {
-      response.redirect('/jobs/dashboard');
+    // Render Dashboard with error messages
+    response.render('dashboard', {
+      layout: false,
+      title: 'iEmployee - Dashboard',
+      condition: true,   
+      errors: errors.array()
+    });
+
+    // return response.status(422).json({ errors: errors.array()});
+  } else {
+
+      // Convert Tags String to Array
+      let str = request.body.tags;
+      let tags = str.split(',');
+
+      // Prepare Data for MongoDB
+      let vacancie = new Vacancie();
+      vacancie.title = request.body.title;
+      vacancie.fte = request.body.fte;
+      vacancie.body = request.body.description;
+      vacancie.location = request.body.location;
+      vacancie.tags = tags;
+
+      // Save Document to MongoDB
+      vacancie.save(function(err) {
+        if (err) {
+          console.log(err);
+          return;
+        } else {
+          response.redirect('/jobs/dashboard');
+        }
+      });
     }
-  });
-
 });
+
+/**
+ * Type: DELETE 
+ * Data: Vacancy
+ * View: Dashboard
+ * Scope: Employer
+ */ 
+
+ router.delete('/delete/:id', function(request, response) {
+  // Create Query Object
+  let query = {_id: request.params.id}
+    // Remove from MongoDB
+    Vacancie.remove(query, function(err) {
+      if(err) {
+        console.log(err);
+      } else {
+        response.render('dashboard', {
+          layout: false,
+          title: 'iEmployee - Dashboard'
+        });
+      }
+    });
+ });
 
 router.post('/submit', urlencodedParser, function(request, response, next) {
 
@@ -271,6 +332,8 @@ router.post('/submit', urlencodedParser, function(request, response, next) {
   }
 });
 
+
+
 function dataExtract(uploadPath, response) {
   // Data Extract from file
   textract.fromFileWithPath(uploadPath, function(error, text) {
@@ -281,5 +344,7 @@ function dataExtract(uploadPath, response) {
     });
   });
 }
+
+
 
 module.exports = router;

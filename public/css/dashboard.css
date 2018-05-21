@@ -106,18 +106,23 @@ body {
 
 #userImg {
   border-radius: 50%;
-  width: 5%;
+  max-width: 44px;
+  max-height: 44px;
 }
 
 #user .dropdown-menu {
   left: auto;
-  right: 0;
+  right: 1em;
+  top: 4em;
   text-align: right;
-  font-size: 0.875em;
 }
 
-.dropdown-toggle::after {
+#user .dropdown-toggle::after {
   display: none
+}
+
+.dropdown-menu {
+  font-size: 0.875em;
 }
 
 /*

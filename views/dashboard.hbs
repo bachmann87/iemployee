@@ -13,12 +13,12 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
 
     <!-- Bootstrap JavaScript-->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
 
     <!-- Custom styles for this template -->
-    <link href="http://localhost:8080/css/dashboard.css" rel="stylesheet">
+    <link href="/css/dashboard.css" rel="stylesheet">
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
@@ -34,20 +34,57 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="dashboardNavigation">
-          <div class="nav navbar-nav mr-auto">
-            <a class="nav-item nav-link" href="http://localhost:8080/jobs/dashboard">Dashboard</a>
-            <a class="nav-item nav-link" href="http://localhost:8080/jobs/">Vakanzen</a>
-            <a class="nav-item nav-link" href="http://localhost:8080/jobs/">NLP-Interface</a>
-            <a class="nav-item nav-link" href="http://localhost:8080/jobs/">API-Intergration</a>
-            <a class="nav-item nav-link" href="http://localhost:8080/jobs/">Reports</a>
-          </div>
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/jobs/dashboard">Dashboard</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Vakanzen</a>    
+              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <span class="dropdown-item-text"><b>ERM</b></span>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Übersicht</a>
+                <button class="dropdown-item" data-toggle="modal" data-target="#add_vacancies">Vakanz hinzufügen</button>
+                                <div class="dropdown-divider"></div>
+                <span class="dropdown-item-text"><b>Externe Ansicht</b></span>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="/jobs">Übersicht</a>                
+              </div>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">NLP-Interface</a>    
+              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <span class="dropdown-item-text"><b>Node.js</b></span>
+                <a class="dropdown-item" href="#">TF-IDF</a>
+                <span class="dropdown-item-text"><b>Python</b></span>
+                <a class="dropdown-item" href="#">Syntax Analysis</a>
+                <a class="dropdown-item" href="#">Sentiment Analysis</a>
+              </div>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">API-Integration</a>    
+              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" href="#"><span data-feather="log-in"></span><span class="item-text"> Login</span></a>
+              </div>
+            </li>                            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Reporting</a>    
+              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" href="#">Übersicht</a>
+                <a class="dropdown-item" href="#">Vakanzen</a>
+                <a class="dropdown-item" href="#">Bewerber</a>
+                <a class="dropdown-item" href="#">Mitarbeiter</a>
+              </div>
+            </li> 
+          </ul>
           <div class="nav navbar-nav">
             <div id="user" class="nav-item">
               <a class="dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <!-- <img id="userImg" src="http://localhost:8080/img/Partner.png" class="img-fluid" alt=""> -->
+                <!-- <img id="userImg" src="/img/Partner.png" class="img-fluid" alt=""> -->
                 <img id="userImg" src="/img/Partner2.png" class="img-fluid">
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <span class="dropdown-item-text"><b>john.doe@iemployee.com</b></span>
                 <a class="dropdown-item" href="#">Postfach
                   <span class="badge badge-secondary">9</span>
                   <span class="sr-only">unread messages</span>
@@ -79,7 +116,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a id="showVacancy" class="nav-link" href="#"><span data-feather="database"></span> Vakanzen</a>
+                <a id="showVacancy" class="nav-link"><span data-feather="database"></span> Vakanzen</a>
                 <ul id="treeVacancy" class="tree">
                   <li class="tree-item"><div class="">Übersicht</div></li>
                   <li id="addVacancy" class="tree-item" data-toggle="modal" data-target="#add_vacancies"><div class="">Hinzufügen</div></li>
@@ -143,103 +180,30 @@
         </nav>
 
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
-            <h1 class="h2">John Doe</h1>
-            <div class="btn-toolbar mb-2 mb-md-0">
-              <div class="btn-group mr-2">
-                <button class="btn btn-sm btn-outline-secondary">Share</button>
-                <button class="btn btn-sm btn-outline-secondary">Exportieren</button>
-              </div>
-              <button class="btn btn-sm btn-outline-secondary dropdown-toggle">
-                <span data-feather="calendar"></span>
-                Diese Woche
-              </button>
-            </div>
-          </div>
-
-{{!-- <div class="row">    
-    <div class="col"> 
-        <div class="card">           
-            <div class="card-body bg-primary text-white">
-                <div class="row">
-                    <div class="col">
-                        <i class="fa fa-users fa-4x" aria-hidden="true"></i>
-                    </div>
-                    <div class="col">
-                        <h2 class="card-title">238</h2>
-                        <p>Users Online</p>
-                    </div>
-                </div>
-                
-            </div>
-            <div class="card-footer">
-                <a href="#" class="text-dark">Link To Data 
-                &nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right" aria-hidden="true"></i></a>
-            </div>
-        </div>
-    </div>
-    <div class="col"> 
-        <div class="card">           
-            <div class="card-body bg-success text-white">
-                <div class="row">
-                    <div class="col">
-                        <i class="fa fa-envelope fa-4x" aria-hidden="true"></i>
-                    </div>
-                    <div class="col">
-                        <h2 class="card-title">21</h2>
-                        <p>Messages</p>
-                    </div>
-                </div>                
-            </div>
-            <div class="card-footer">
-                <a href="#" class="text-dark">Link To Data 
-                &nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right" aria-hidden="true"></i></a>
-            </div>
-        </div>
-    </div>
-    <div class="col"> 
-        <div class="card">           
-            <div class="card-body bg-dark text-white">
-                <div class="row">
-                    <div class="col">
-                        <i class="fa fa-line-chart fa-4x" aria-hidden="true"></i>
-                    </div>
-                    <div class="col">
-                        <h2 class="card-title">5</h2>
-                        <p>Metrics</p>
-                    </div>
-                </div>                
-            </div>
-            <div class="card-footer">
-                <a href="#" class="text-dark">Link To Data 
-                &nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right" aria-hidden="true"></i></a>
-            </div>
-        </div>
-    </div>
-    <div class="col"> 
-        <div class="card">           
-            <div class="card-body bg-danger text-white">
-                <div class="row">
-                    <div class="col">
-                            <i class="fa fa-exclamation-triangle fa-4x" aria-hidden="true"></i>
-                    </div>
-                    <div class="col">
-                        <h2 class="card-title">5</h2>
-                        <p>Errors</p>
-                    </div>
-                </div>                
-            </div>
-            <div class="card-footer">
-                <a href="#" class="text-dark">Link To Data 
-                &nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right" aria-hidden="true"></i></a>
-            </div>
-        </div>
-    </div>
-</div>           --}}
 
           <div id="chart" class="my-4 w-100">
+            <br>
             <div class="">
-              <h5>Reporting für offene Vakanzen</h5>
+              <div class="h5 d-flex justify-content-between">
+                  <div class="dropdown">
+                    <button class="btn btn-sm btn-outline-secondary" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Diagramm wählen
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <a class="dropdown-item" href="#">#Bewerbungen/Vakanz</a>
+                      <a class="dropdown-item" href="#">NLP/Bewerber</a>
+                      <a class="dropdown-item" href="#">NLP/Vakanz</a>
+                    </div>
+                  </div>
+                  <div class="btn-group">
+                    <button class="btn btn-sm btn-outline-secondary">Share</button>
+                    <button class="btn btn-sm btn-outline-secondary">Exportieren</button>
+                  </div>
+                  <button class="btn btn-sm btn-outline-secondary">
+                    <span data-feather="calendar"></span>
+                    Diese Woche
+                  </button>                                                  
+               </div>               
               <hr class="my-4">
             </div>
             <canvas id="myChart" width="900" height="380"></canvas>
@@ -247,28 +211,38 @@
 
           <div id="applicants" class="my-4 w-100">
             <div class="">
-              <h5>Vakanzen</h5>
+              <h5>Vakanzen <span data-feather="plus-circle" data-toggle="modal" data-target="#add_vacancies" style="cursor: pointer;"></span></h5>
               <hr class="my-4">
+              {{# if errors }}
+                {{# each errors }}
+                  <div class="alert alert-danger">{{ this.msg }}</div>
+                {{/ each }}
+              {{/ if }}
             </div>
             <div class="table-responsive">
               <table class="table table-bordered table-hover">
                 <thead>
                   <tr>
-                    <th>Bearbeiten</th>
                     <th>Vakanz</th>
                     <th>Arbeitsort</th>
                     <th>Pensum</th>
                     <th>Tags</th>
+                    <th>Bearbeiten | Löschen</th>
                   </tr>
                 </thead>
                 <tbody>
                   {{# vacancies}}
                   <tr>
-                    <td><a href="/jobs/edit/{{_id}}" data-id="{{_id}}" class="btn btn-sm btn-info">Bearbeiten</a></td>
                     <td>{{title}}</td>
                     <td>{{location}}</td>
                     <td>{{fte}}%</td>
                     <td>{{# tags}} {{[]}}, {{/ tags}}</td>
+                    <td>
+                      <div class="btn-group">
+                        <a href="/jobs/edit/{{_id}}" data-id="{{_id}}" class="btn btn-sm btn-outline-secondary edit-vacancy">Bearbeiten<a>
+                        <a data-id="{{_id}}" class="btn btn-sm btn-outline-secondary transfer-delete">Löschen</a>
+                      </div>                      
+                    </td>
                   </tr>
                   {{/ vacancies}}
                 </tbody>
@@ -278,10 +252,10 @@
 
           <div id="vacancies" class="my-4 w-100">
             <div class="">
-              <h5>Vakanzen hinzufügen</h5>
+              <h5>Mitarbeiter</h5>
               <hr class="my-4">
             </div>
-
+            <div></div>
           </div>
         </main>
       </div>
@@ -292,7 +266,7 @@
       <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Vakanz hinzufügen</h5>
+            <h5 class="modal-title lead" id="exampleModalLabel">Vakanz hinzufügen</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -332,8 +306,35 @@
           </div>
         </div>
       </div>
-    </div>     
+    </div>
 
+  {{!-- Modal --}}
+  <div class="modal" id="delete_vacancy" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title lead" id="exampleModalCenterTitle">Vakanz löschen</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" style="padding: 0; margin: 0;">
+          <div class="container-fluid" style="padding: 0; margin: 0;">
+              <div class="alert alert-danger align-items-center" style="margin: 0; border-radius: 0;">
+                  <i class="fas fa-exclamation-triangle"></i> 
+                  <span>Dies kann nicht rückgängig gemacht werden</span>
+              </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Schliessen</button>
+          <a id="delete" href="" data-id="" class="btn btn-sm btn-danger delete-vacancy">Ja, Vakanz löschen</a>
+        </div>
+      </div>
+    </div>
+  </div>         
+
+  <script type="text/javascript" src="/js/delete.js"></script>
     <script type="text/javascript">
 
     const addVacancy = document.querySelector('#addVacancy');
@@ -369,21 +370,30 @@
     <!-- Graphs -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
     <script>
+      var str = "{{jobs}}";
+      var labels = str.split(',');
       var ctx = document.getElementById("myChart");
       var myChart = new Chart(ctx, {
         type: 'bar',
         data: {
-          labels: [
-          {{# vacancies}}
-          "{{title}}", 
-          {{/ vacancies}}
-          ],
+          labels: labels,
           datasets: [{
-            data: [6, 28, 18],
+            data: [{{index_1}}],
             lineTension: 0,
-            backgroundColor: '#64b5f6',
+            backgroundColor: 'rgba(79,195,247,0.5)',
+            borderColor: 'rgba(79,195,247,1)',
+            borderWidth: 2,
             pointBackgroundColor: '#007bff'
-          }]
+          },
+          {
+            data: [{{index_2}}],
+            lineTension: 0,
+            backgroundColor: 'rgba(2,136,209,0.5)',
+            borderColor: 'rgba(2,136,209,1)',
+            borderWidth: 2,
+            pointBackgroundColor: '#007bff'
+          },
+          ]
         },
         options: {
           scales: {
@@ -398,6 +408,7 @@
           }
         }
       });
+  
     </script>
   </body>
 </html>
