@@ -157,59 +157,14 @@
                   Current month
                 </a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span data-feather="file-text"></span>
-                  Last quarter
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span data-feather="file-text"></span>
-                  Social engagement
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span data-feather="file-text"></span>
-                  Year-end sale
-                </a>
-              </li>
             </ul>
           </div>
         </nav>
 
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
 
-          <div id="chart" class="my-4 w-100">
-            <br>
-            <div class="">
-              <div class="h5 d-flex justify-content-between">
-                  <div class="dropdown">
-                    <button class="btn btn-sm btn-outline-secondary" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      Diagramm wählen
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                      <a class="dropdown-item" href="#">#Bewerbungen/Vakanz</a>
-                      <a class="dropdown-item" href="#">NLP/Bewerber</a>
-                      <a class="dropdown-item" href="#">NLP/Vakanz</a>
-                    </div>
-                  </div>
-                  <div class="btn-group">
-                    <button class="btn btn-sm btn-outline-secondary">Share</button>
-                    <button class="btn btn-sm btn-outline-secondary">Exportieren</button>
-                  </div>
-                  <button class="btn btn-sm btn-outline-secondary">
-                    <span data-feather="calendar"></span>
-                    Diese Woche
-                  </button>                                                  
-               </div>               
-              <hr class="my-4">
-            </div>
-            <canvas id="myChart" width="900" height="380"></canvas>
-          </div>
-
           <div id="applicants" class="my-4 w-100">
+            <br>
             <div class="">
               <h5>Vakanzen <span data-feather="plus-circle" data-toggle="modal" data-target="#add_vacancies" style="cursor: pointer;"></span></h5>
               <hr class="my-4">
@@ -219,6 +174,10 @@
                 {{/ each }}
               {{/ if }}
             </div>
+            {{!-- Success --}}
+            {{# if expressFlash }}
+                <p><strong>FLASH!</strong> {{ expressFlash }}</p>
+            {{/ if }}           
             <div class="table-responsive">
               <table class="table table-bordered table-hover">
                 <thead>
@@ -250,12 +209,42 @@
             </div>
           </div>
 
-          <div id="vacancies" class="my-4 w-100">
+          <div id="chart" class="my-4 w-100">
             <div class="">
-              <h5>Mitarbeiter</h5>
+              <div class="h5 d-flex justify-content-between">
+                  <div class="dropdown">
+                    <button class="btn btn-sm btn-outline-secondary" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Diagramm wählen
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <a class="dropdown-item" href="#">#Bewerbungen/Vakanz</a>
+                      <a class="dropdown-item" href="#">NLP/Bewerber</a>
+                      <a class="dropdown-item" href="#">NLP/Vakanz</a>
+                    </div>
+                  </div>
+                  <button class="btn btn-sm btn-outline-secondary">
+                    <span data-feather="calendar"></span>
+                    Diese Woche
+                  </button>                                                  
+               </div>               
               <hr class="my-4">
             </div>
-            <div></div>
+            <canvas id="myChart" width="900" height="380"></canvas>
+          </div>
+
+          <div id="vacancies" class="my-4 w-100">
+            <div class="">
+              <h5>Dateisystem</h5>
+              <hr class="my-4">
+            </div>
+            <div>
+              <div class="list-group">
+                <div class="list-group-item">
+                  <span class="feather" data-feather="folder"></span>
+                  Ordner 1
+                </div>
+              </div>
+            </div>
           </div>
         </main>
       </div>

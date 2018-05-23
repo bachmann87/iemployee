@@ -6,11 +6,15 @@ var mongoose = require('mongoose');
 var chalk = require('chalk');
 var logSymbols = require('log-symbols');
 const {check, validationResult} = require('express-validator/check');
+const textract = require('textract');
 
 // Core Modules
 var fs = require('fs');
 var path = require('path');
 var util = require('util');
+
+// Globals
+var user = {};
 
 // Set Router
 var router = express.Router();
@@ -20,22 +24,9 @@ var urlencodedParser = bodyParser.urlencoded({
   extended: false
 });
 
-// -------------------
-// Database
-// -------------------
 
-mongoose.connect('mongodb://localhost/iemployee');
-let db = mongoose.connection;
+const session = require('express-session');
 
-// Check connection
-db.once('open', function() {
-  util.log(chalk.cyan.bold(`[MongoDB started] - Status: [${logSymbols.success}]`));
-});
-
-// Check for DB-Errors
-db.on('error', function(err) {
-  util.log(chalk.red.bold(err));
-});
 
 // Data models
 let Vacancie = require('../models/vacancies');
@@ -169,14 +160,23 @@ router.post('/edit/:id', function(request, response) {
 router.get('/apply/:id', function(request, response) {
 
   // Store Id
-  let jobId = request.params.id;
+  let objId = request.params.id;
 
-  // Render View
-  response.render('apply', {
-    title: 'iEmployee - Recruitment Center - Apply for a job',
-    job: jobId
+  // Get Data from DB
+  Vacancie.findOne({_id: objId}, function(err, vacancies) {
+    if(err) {
+      throw err;
+    } else {
+      // Render View
+      response.render('apply', {
+        title: 'iEmployee - Recruitment Center - Apply for a job',
+        job: objId,
+        success: request.session.success,
+        errors: request.session.errors,
+        vacancies: vacancies    
+      });
+    }
   });
-
 });
 
 
@@ -189,21 +189,25 @@ router.get('/dashboard', function(req, res, next) {
 
   // Get Data from MongoDB
   Vacancie.find({}, function(err, vacancies) {
+
     // Errorhandler
     if (err) {
       util.log(chalk.blue.bold(err));
     } else {
+
       // Cast Obj
       let keys = Object.keys(vacancies);
       let datasetJobs = [];
       let dataset1 = [];
       let dataset2 = [];
+
       // Iterate to Doc
       for(let i=0;i<keys.length;i++) {
         dataset1.push(Math.ceil(Math.random()*100));
         dataset2.push(Math.ceil((Math.random()*20)*-1));
         datasetJobs.push(vacancies[i].title);
       }
+
       // Render Page
       res.render('dashboard', {
         layout: false,
@@ -221,7 +225,7 @@ router.get('/dashboard', function(req, res, next) {
 router.post('/add', urlencodedParser, [
   check('title', 'Bitte geben Sie der Vakanz einen Titel.').not().isEmpty().isString(),
   check('description', 'Bitte geben Sie eine Beschreibung an.').isString(),
-  check('fte', 'Ungültiger Beschäftigungsgrad. Zahl zwischen 0.00 und 1.00').not().isEmpty().isString(),
+  check('fte', 'Ungültiger Beschäftigungsgrad. Zahl zwischen 0.00 und 1.00').not().isEmpty().isNumeric(),
   check('location', 'Bitte wählen Sie eine gültige Niederlassung.').not().isEmpty().isString(),
   check('tags', 'Bitte geben Sie mind. ein Stichwort an.').not().isEmpty().isString()
 ], (request, response, next) => {
@@ -239,7 +243,6 @@ router.post('/add', urlencodedParser, [
       condition: true,   
       errors: errors.array()
     });
-
     // return response.status(422).json({ errors: errors.array()});
   } else {
 
@@ -261,7 +264,11 @@ router.post('/add', urlencodedParser, [
           console.log(err);
           return;
         } else {
-          response.redirect('/jobs/dashboard');
+
+          response.render('dashboard', {
+            layout: false
+          });
+          // response.redirect('/jobs/dashboard');
         }
       });
     }
@@ -289,62 +296,6 @@ router.post('/add', urlencodedParser, [
       }
     });
  });
-
-router.post('/submit', urlencodedParser, function(request, response, next) {
-
-  // Check if File is uploaded
-  if (request.files) {
-
-    // Store data
-    let name = request.body.name;
-    let prename = request.body.prename;
-    let email = request.body.email;
-    let file = request.files.cv;
-    let filename = request.files.cv.name;
-    let uploadPath = path.join(__dirname, '/../uploads', filename);
-
-    // Move the file to the upload directory
-    file.mv(uploadPath, function(err) {
-      if (err)
-        return response.status(500).send(err);
-    });
-
-    // Data Extract
-    // dataExtract(uploadPath, response);
-
-    // Create User Object
-    var user = {
-      name: name,
-      prename: prename,
-      email: email,
-      cv: filename,
-      path: uploadPath
-    }
-
-    // Save Form Data to Database
-
-    // Client Redirect
-    response.render('success', {
-      layout: 'forms.hbs',
-      title: 'iEmployee - Recruitment Center',
-      data: user
-    });
-  }
-});
-
-
-
-function dataExtract(uploadPath, response) {
-  // Data Extract from file
-  textract.fromFileWithPath(uploadPath, function(error, text) {
-    fs.writeFile(path.join(__dirname, '/../uploads', 'pdfextract.txt'), text, function(err) {
-      if (err) throw err;
-      // Output message
-      util.log('Saved!');
-    });
-  });
-}
-
 
 
 module.exports = router;

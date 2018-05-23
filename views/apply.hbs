@@ -1,13 +1,18 @@
 <!-- Header -->
-<nav class="navbar navbar-expand-lg navbar-light">
+<nav class="navbar navbar-expand-lg navbar-light shadow-sm">
   <a class="navbar-brand" href="#">iEmployee</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNavigation" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNavigation" aria-controls="navbarNavAltMarkup"
+    aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="mainNavigation">
     <div class="navbar-nav mr-auto">
-      <a class="nav-item nav-link" href="http://localhost:8080/">Home</a>
-      <a class="nav-item nav-link" href="http://localhost:8080/jobs/">Vakanzen</a>
+      <a class="nav-item nav-link" href="/">Home</a>
+      <a class="nav-item nav-link" href="/#iemployee">iEmployee<sup>&reg;</sup></a>
+      <a class="nav-item nav-link" href="/#product">Produkt</a>
+      <a class="nav-item nav-link" href="/#twitter">Wissen</a>
+      <a class="nav-item nav-link" href="/#media">Medien</a>      
+      <a class="nav-item nav-link" href="/jobs">Karriere</a>
     </div>
     <div class="navbar-nav">
       <a class="btn btn-sm btn-info text-white" href="/">Logout</a>
@@ -15,130 +20,157 @@
   </div>
 </nav>
 
-    <section id="banner" class="jumbo-wrapper">
-      <div class="view">
-        <div class="container d-flex align-items-center justify-content-center">
-          <div class="row d-flex justify-content-start">
-            <div class="col-md-2 text-center">
-              <img id="partner" src="http://localhost:8080/img/Partner.png" class="img-fluid" alt="" style="border-radius: 50%;">
+<section id="applicationForm">
+  <!-- Jumbotron -->
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="jumbotron jumbotron-fluid jumbo-wrapper">
+          <div class="d-flex vertical-align-items justify-content-start" style="padding-left: 2em;">
+            <img src="/img/icon-512x512.png" alt="" style="width: 50px; height: 50px;">
+            <div class="text-white" style="padding-left: 1em;">
+              <div class="lead">Bewerbungsformular</div>
+              <div>{{vacancies.title}}</div>
             </div>
-            <div class="col-md-4 text-left">
-              <h1 class="section-title">Sarah Muster</h1>
-              <p class="section-sub">Telefon: +41 79 129 98 02</p>
-            </div>
+          </div>          
+        </div>  
+        <br>      
+        {{#if success}}
+        <img src="/img/icon-512x512.png" alt="" style="width: 96px; height: 96px;">
+        <h2 class="h2">Herzlichen Dank für Ihre Bewerbung</h2>
+        <div class="alert alert-success">Wir haben alle Daten erfolgreich erhalten.
+          <a class="alert-link" href="/jobs">Zurück zur Startseite?</a>
+        </div>
+        {{else}} {{#if errors}} {{#each errors}}
+        <div class="alert alert-danger">{{this.msg}}</div>
+        {{/each}} {{/if}}
+        <form action="/users/submit" method="post" enctype="multipart/form-data">
+
+          <!-- ************* -->
+          <!-- Personendaten -->
+          <!-- ************* -->
+
+          <!-- ObjId -->
+          <input class="form-control" type="text" name="objid" value="{{job}}" hidden>
+          <!-- Vacancy -->
+          <input class="form-control" type="text" name="vacancy" value="{{vacancies.title}}" hidden>
+          <!-- Name -->
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input class="form-control" type="text" name="name" value="">
           </div>
+          <!-- Vorname -->
+          <div class="form-group">
+            <label for="prename">Vorname</label>
+            <input class="form-control" type="text" name="prename" value="">
+          </div>
+          <!-- Email -->
+          <div class="form-group">
+            <label for="email">Email Addresse</label>
+            <input class="form-control" type="email" name="email" value="">
+          </div>
+
+          <!-- *********** -->
+          <!--    Files    -->
+          <!-- *********** -->
+
+          <!-- Lebenslauf -->
+          <div class="form-group">
+            <label for="cv">Lebenslauf</label>
+            <input type="file" class="form-control-file" name="cv">
+          </div>
+          <!-- Motivationsschreiben -->
+          <div class="form-group">
+            <label for="ml">Motivationsschreiben</label>
+            <input type="file" class="form-control-file" name="ml">
+          </div>
+          <!-- Arbeitszeugnisse -->
+          <div class="form-group">
+            <label for="rf">Arbeitszeugnis</label>
+            <input type="file" class="form-control-file" name="rf">
+          </div>
+          <!-- Senden -->
+          <button type="submit" class="btn btn-indigo float-right">Bewerbung absenden</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div id="footer-lead">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-2">
+          <div class="lead">Navigation</div>
+          <ul class="footer-nav">
+            <li class="">
+              <a href="">Link</a>
+            </li>
+            <li class="">
+              <a href="">Link</a>
+            </li>
+            <li class="">
+              <a href="">Link</a>
+            </li>
+            <li class="">
+              <a href="">Link</a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-md-2">
+          <div class="lead">Social Media</div>
+          <ul class="footer-nav">
+            <li class="">
+              <a href="">Link</a>
+            </li>
+            <li class="">
+              <a href="">Link</a>
+            </li>
+            <li class="">
+              <a href="">Link</a>
+            </li>
+            <li class="">
+              <a href="">Link</a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-md-2">
+          <div class="lead">Partners</div>
+          <ul class="footer-nav">
+            <li class="">
+              <a href="">Link</a>
+            </li>
+            <li class="">
+              <a href="">Link</a>
+            </li>
+            <li class="">
+              <a href="">Link</a>
+            </li>
+            <li class="">
+              <a href="">Link</a>
+            </li>
+          </ul>
         </div>
       </div>
-    </section>
-
-    <section id="applicationForm">
-      <!-- Jumbotron -->
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12">
-            <h2 class="section-su">Bewerbungsformular</h2>
-            <small class="job">Vakanz: {{job}}</small>
-            <form action="/../../submit" method="post" enctype="multipart/form-data">
-              <div class="form-group">
-                <label for="name">Name</label>
-                <input class="form-control" type="text" name="name" value="">
-              </div>
-              <div class="form-group">
-                <label for="prename">Vorname</label>
-                <input class="form-control" type="text" name="prename" value="">
-              </div>
-              <div class="form-group">
-                <label for="email">Email Addresse</label>
-                <input class="form-control" type="email" name="email" value="">
-              </div>
-              <!-- Lebenslauf -->
-              <div class="form-group">
-                <label for="cv">Lebenslauf</label>
-                <input type="file" class="form-control-file" name="cv">
-              </div>
-              <!-- Motivationsschreiben -->
-              <div class="form-group">
-                <label for="motivation">Motivationsschreiben</label>
-                <input type="file" class="form-control-file" name="motivation">
-              </div>
-              <!-- Senden -->
-              <button type="submit" class="btn btn-indigo float-right">Bewerbung absenden</button>
-            </form>
-          </div>
+    </div>
+  </div>
+  <div id="footer-sub">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="text-black">iEmployee is an educational research project</div>
+        </div>
+        <div class="col-md-6 ml-auto text-right">
+          <a href="" class="footer-link">iemployee.com</a>
+          <span>|</span>
+          <a href="" class="footer-link">Terms of Service</a>
+          <a href="" class="footer-link">Privacy</a>
+          <a href="" class="footer-link">Cookies</a>
+          <span>&copy; ajaybachmann.com</span>
         </div>
       </div>
-    </section>
-
-    <section id="api">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12">
-              <h1 class="display-4">TF-IDF</h1>
-              <p class="lead">Term-Frequency Inverse Document Frequency<br><small>with Node Natural</small></p>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-lg-4">
-            <p class="">Terms weighted by importance</p>
-            <div id="res"></div>
-          </div>
-          <div class="col-lg-8">
-            <p class="">Data Visualisation</p>
-            <div id="google" style="border: 1px solid white; height: 100%; width: 100%"></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <footer>
-        <div id="footer-lead">
-          <div class="container">
-            <div class="row">
-                <div class="col-md-2">
-                  <div class="lead">Navigation</div>
-                  <ul class="footer-nav">
-                    <li class=""><a href="">Link</a></li>
-                    <li class=""><a href="">Link</a></li>
-                    <li class=""><a href="">Link</a></li>
-                    <li class=""><a href="">Link</a></li>
-                  </ul>
-                </div>
-                <div class="col-md-2">
-                  <div class="lead">Social Media</div>
-                  <ul class="footer-nav">
-                    <li class=""><a href="">Link</a></li>
-                    <li class=""><a href="">Link</a></li>
-                    <li class=""><a href="">Link</a></li>
-                    <li class=""><a href="">Link</a></li>
-                  </ul>
-                </div>
-                <div class="col-md-2">
-                  <div class="lead">Partners</div>
-                  <ul class="footer-nav">
-                    <li class=""><a href="">Link</a></li>
-                    <li class=""><a href="">Link</a></li>
-                    <li class=""><a href="">Link</a></li>
-                    <li class=""><a href="">Link</a></li>
-                  </ul>
-                </div>
-              </div>
-          </div>
-        </div>
-        <div id="footer-sub">
-          <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                  <div class="text-black">iEmployee is an educational research project</div>
-                </div>
-                <div class="col-md-6 ml-auto text-right">
-                  <a href="" class="footer-link">iemployee.com</a>
-                  <span>|</span>
-                  <a href="" class="footer-link">Terms of Service</a>
-                  <a href="" class="footer-link">Privacy</a>
-                  <a href="" class="footer-link">Cookies</a>
-                  <span>&copy; ajaybachmann.com</span>
-                </div>
-              </div>
-          </div>
-        </div>
-      </footer>
+    </div>
+  </div>
+</footer>
+{{/if}}

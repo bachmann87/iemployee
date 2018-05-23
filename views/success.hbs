@@ -3,19 +3,21 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h1>Herzlichen Dank für Ihre Bewerbung</h1>
-                <p>Wir haben alle Daten erfolgreich erhalten.<a href="/demo"> Zurück zur Startseite</a></p>
+                <br>
+                <img src="/img/icon-512x512.png" alt="" style="width: 96px; height: 96px;">
+                <h1 class="h2">Herzlichen Dank für Ihre Bewerbung</h1>
+                <div class="alert alert-success">Wir haben alle Daten erfolgreich erhalten. <a class="alert-link" href="/jobs">Zurück zur Startseite?</a></div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
-                <h2>Zusammenfassung:</h2>
                 <div class="list-group">
-                    <div class="list-group-item">Filename: {{data.cv}}</div>
-                    <div class="list-group-item">Upload to: {{data.path}}</div>
-                    <div class="list-group-item">Full Name: {{data.prename}} {{data.name}}</div>
-                    <div class="list-group-item">Mail: {{data.email}}</div>
+                    <div class="list-group-item"><b>Dateien:</b><br>{{#each data.docs}} {{this}}<br>{{/each}}</div>
+                    <div class="list-group-item"><b>Vorname/Name:</b><br>{{data.prename}} {{data.name}}</div>
+                    <div class="list-group-item"><b>Mail:</b><br>{{data.email}}</div>
                 </div>
+                <br>
+                <a href="/jobs" class="btn btn-sm btn-outline-secondary">Zurück zur Startseite?</a>
             </div>
         </div>
     </div>

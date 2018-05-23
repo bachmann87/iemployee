@@ -6,27 +6,31 @@
   </button>
   <div class="collapse navbar-collapse" id="mainNavigation">
     <div class="navbar-nav mr-auto">
-      <a class="nav-item nav-link" href="http://localhost:8080/">Home</a>
-      <a class="nav-item nav-link" href="http://localhost:8080/jobs/">Vakanzen</a>
+      <a class="nav-item nav-link" href="/">Home</a>
+      <a class="nav-item nav-link" href="/#iemployee">iEmployee<sup>&reg;</sup></a>
+      <a class="nav-item nav-link" href="/#product">Produkt</a>
+      <a class="nav-item nav-link" href="/#twitter">Wissen</a>
+      <a class="nav-item nav-link" href="/#media">Medien</a>      
+      <a class="nav-item nav-link" href="/jobs">Karriere</a>
     </div>
     <div class="navbar-nav">
-      <a class="btn btn-sm btn-info text-white" href="/">Logout</a>
+      <a class="btn btn-sm btn-outline-secondary" href="/">Sign in</a>
     </div>
   </div>
 </nav>
 
 
-<section style="padding-top: 5em;">
-  <div class="container">
-    <div class="display-4">Jobcenter</div>
-    <hr class="my-4">
-    <div class="lead">Hier finden Sie alle offenen Vakanzen</div>
+<section>
+  <div class="jumbotron jumbotron-fluid jumbo-wrapper">
+    <div class="container text-white">
+      <h1 class="text-white section-title">Vakanzen</h1>
+      <div>Mut steht am Anfang des Handelns, Glück am Ende.</div>
+    </div>
   </div>
 </section>
 
 <section id="jobs">
   <div class="container">
-    <h1 class="section-title">Vakanzen</h1>
     <div class="row">
       <div class="col-md-4">
         <div class="form-group">
@@ -68,7 +72,7 @@
           <a href="/jobs/view/{{_id}}" class="list-group-item list-group-item-action">
             <div class="data-wrapper">
               <span class="job-date float-right">2 days ago</span>
-              <div class="job-title">{{title}}</div>
+              <div class="h3 job-title">{{title}}</div>
               <div class="job-fte">{{location}}, {{fte}}%</div>
               <div class="section-lead">{{body}}</div>
               <div class="job-tags">

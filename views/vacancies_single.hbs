@@ -1,26 +1,30 @@
 <!-- Header -->
-<nav class="navbar navbar-expand-lg navbar-light">
-  <a class="navbar-brand" href="#">iEmployee</a>
+<nav class="navbar navbar-expand-lg navbar-light shadow-sm" style="z-index: 1200;">
+  <a class="navbar-brand" href="#">iEmployee</a> 
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNavigation" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="mainNavigation">
     <div class="navbar-nav mr-auto">
-      <a class="nav-item nav-link" href="http://localhost:8080/">Home</a>
-      <a class="nav-item nav-link" href="http://localhost:8080/jobs/">Vakanzen</a>
+      <a class="nav-item nav-link" href="/">Home</a>
+      <a class="nav-item nav-link" href="/#iemployee">iEmployee<sup>&reg;</sup></a>
+      <a class="nav-item nav-link" href="/#product">Produkt</a>
+      <a class="nav-item nav-link" href="/#twitter">Wissen</a>
+      <a class="nav-item nav-link" href="/#media">Medien</a>      
+      <a class="nav-item nav-link" href="/jobs">Karriere</a>
     </div>
     <div class="navbar-nav">
-      <a class="btn btn-sm btn-info text-white" href="/">Logout</a>
+      <a class="btn btn-sm btn-outline-secondary" href="/">Sign in</a>
     </div>
   </div>
 </nav>
 
-<section>
+<section style="z-index: 0;">
   <div class="jumbotron jumbotron-fluid jumbo-wrapper">
     <div class="container text-white">
       {{# vacancies}}
-      <div class="display-4">{{title}}</div>
-      <hr class="hr-light my-4">
+      <div class="lead">{{title}}</div>
+      <div>{{body}}</div>
       {{/ vacancies}}
     </div>
   </div>
@@ -28,9 +32,10 @@
 
 <section>
   <div class="container">
-    <div class="row">
+    <div class="row">    
       <div class="col-md-12">
         {{# vacancies}}
+        <br>
         <div class="list-group">
           <div class="list-group-item"><b>Vakanz</b><br>{{title}}</div>
           <div class="list-group-item"><b>Beschäftigungsgrad</b><br>{{fte}}%</div>
@@ -45,10 +50,13 @@
         {{/ vacancies}}
       </div>
       <div class="col-md-12">
-        <a href="/jobs" class="btn btn-info">Zurück</a>
+        <div class="float-right">
+        <br>
+        <a href="/jobs" class="btn btn-sm btn-outline-secondary">Zurück</a>
         {{# vacancies}}
-        <a href="/jobs/apply/{{_id}}" class="btn btn-info">Bewerben</a>
+        <a href="/jobs/apply/{{_id}}" class="btn btn-sm btn-outline-secondary">Bewerben</a>
         {{/ vacancies}}
+        </div>
       </div>
     </div>
   </div>
