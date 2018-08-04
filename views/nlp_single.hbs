@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../../../favicon.ico">
+
+    <title>iEmployee - Dashboard</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+
+    <!-- Bootstrap JavaScript-->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+
+    <!-- Custom styles for this template -->
+    <link href="/css/dashboard.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
+
+    {{!-- DataTables --}}
+    <link rel="stylesheet" href="/css/dataTable.bs.css">
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script src="/js/dataTable.js"></script>
+
+     <!-- Bootsrap Select -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+
+  </head>
+
+  <body>      
+      <!-- Header -->
+      <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top shadow-sm">
+        <a class="navbar-brand" href="#">iEmployee</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#dashboardNavigation" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="dashboardNavigation">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/jobs/dashboard">Dashboard</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Vakanzen</a>    
+              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <span class="dropdown-item-text"><b>ERM</b></span>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Übersicht</a>
+                <button class="dropdown-item" data-toggle="modal" data-target="#add_vacancies">Vakanz hinzufügen</button>
+                                <div class="dropdown-divider"></div>
+                <span class="dropdown-item-text"><b>Externe Ansicht</b></span>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="/jobs">Übersicht</a>                
+              </div>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">NLP-Interface</a>    
+              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <span class="dropdown-item-text"><b>Node.js</b></span>
+                <a class="dropdown-item" href="#">TF-IDF</a>
+                <span class="dropdown-item-text"><b>Python</b></span>
+                <a class="dropdown-item" href="#">Syntax Analysis</a>
+                <a class="dropdown-item" href="#">Sentiment Analysis</a>
+              </div>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">API-Integration</a>    
+              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" href="#"><span data-feather="log-in"></span><span class="item-text"> Login</span></a>
+              </div>
+            </li>                            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Reporting</a>    
+              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" href="#">Übersicht</a>
+                <a class="dropdown-item" href="#">Vakanzen</a>
+                <a class="dropdown-item" href="#">Bewerber</a>
+                <a class="dropdown-item" href="#">Mitarbeiter</a>
+              </div>
+            </li> 
+          </ul>
+          <div class="nav navbar-nav">
+            <div id="user" class="nav-item">
+              <a class="dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <!-- <img id="userImg" src="/img/Partner.png" class="img-fluid" alt=""> -->
+                <img id="userImg" src="/img/Partner2.png" class="img-fluid">
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <span class="dropdown-item-text"><b>john.doe@iemployee.com</b></span>
+                <a class="dropdown-item" href="#">Postfach
+                  <span class="badge badge-secondary">9</span>
+                  <span class="sr-only">unread messages</span>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="/">Abmelden</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+
+<section class="jumbotron jumbotron-fluid jumbo-wrapper" style="padding-top: 120px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9 offset-md-3">
+                <div>
+                    <div class="h2 text-white">{{user.prename}} {{user.name}}</div>
+                    {{#each user.origins}}
+                        <div class="text-white">{{this.title}}</div>
+                    {{/each }}
+                </div>
+            </div>
+        </div>        
+    </div>
+</section>
+<section style="padding-bottom: 2em; padding-top: 2em;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <h2 class="" style="text-align: right;">Kontakt</h2>
+            </div>
+            <div class="col-md-3">
+                <div id="email" style="padding-bottom: 1em;">
+                    <div><b>[E-Mail]</b></div>
+                    <a href="mailto:{{user.email}}">{{user.email}}</a>                    
+                </div>
+                <div id="web" style="padding-bottom: 1em;">
+                    <div><b>[Webseite]</b></div>
+                    <a href="https://ajaybachmann.ch">www.ajaybachmann.ch</a>                    
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div style="padding-bottom: 1em;">
+                    <div><b>[Telefon]</b></div>
+                    <div id="phone">+41 79 129 98 02</div>                    
+                </div>
+                <div style="padding-bottom: 1em;">
+                    <div><b>[User-Id]</b></div>
+                    <div id="userId" style="text-align: left;" data-id="{{user._id}}">{{user._id}}</div>
+                </div>
+            </div>                        
+        </div>
+        <br>        
+    </div>
+</section>
+<section style="padding-bottom: 2em;"style="padding-bottom: 2em;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3" style="text-align: right;">
+                <h2>Bio</h2>
+                <div style="font-size: .75em;">Removed: <span>208</span> Characters</div>
+                <div style="font-size: .75em;">Score: <span></span></div>
+            </div>
+            <div class="col-md-6">
+                <div id="bio"></div>
+            </div>
+        </div>
+    </div>
+</section>
+<section style="padding-bottom: 2em;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3" style="text-align: right;">
+                <h2>Trie</h2>
+                <div style="font-size: .75em;">Score: <span id="triesScore">{{user.output.trie.score}}</span></div>
+            </div>
+            <div class="col-md-6">
+                <div id="tries" class="table-responsive">
+                    <table class="table table-sm table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>Stichworte</th>
+                                <th>Punktzahl</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {{#each user.output.trie.result as |key value|}}
+                            <tr>
+                                <td>{{value}}</td>
+                                <td>{{key}}</td>
+                            </tr>
+                        {{/each }}
+                        </tbody>
+                    </table>
+                </div>                
+            </div>
+        </div>        
+    </div>
+</section>
+    <section style="padding-bottom: 2em;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3" style="text-align: right;">
+                    <h2>TF-IDF</h2>
+                    <div style="font-size: .75em;">Score: <span id="tfidfScore"></span></div>
+                </div>
+                <div class="col-md-6">
+                    <div id="tries" class="table-responsive">
+                        <table class="table table-sm table-bordered table-hover"  id="myTable">
+                            <thead>
+                                <tr>
+                                    <th>Stichworte</th>
+                                    <th>Punktzahl</th>
+                                </tr>
+                            </thead>                      
+                            <tbody>
+                            {{#each user.output.tfidf as |key value|}}
+                                <tr>
+                                    <td>{{value}}</td>
+                                    <td>{{key}}</td>
+                                </tr>
+                            {{/each }}
+                            </tbody>    
+                            <tfoot>
+                                <tr>
+                                    <th>Stichworte</th>
+                                    <th>Punktzahl</th>
+                                </tr>
+                            </tfoot>                                            
+                        </table>
+                    </div>                
+                </div>
+            </div>        
+        </div>
+    </section>
+    {{!-- Application JavaScript --}}
+    <script type="text/javascript" src="/js/nlp.js"></script>  
+  </body>
+</html>

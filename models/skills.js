@@ -28,15 +28,7 @@ let userSchema = Schema({
     type: Schema.Types.ObjectId,
     ref: 'Vacancie',
     required: true
-  }],
-  nlp: {
-    type: Object,
-    required: false
-  },
-  output: {
-    type: Object,
-    required: false
-  }  
+  }]
 });
-var collectionName = 'users'
-var User = module.exports = mongoose.model('User', userSchema, collectionName);
+var collectionName = 'skills'
+var User = module.exports = mongoose.model('Skill', userSchema, collectionName);

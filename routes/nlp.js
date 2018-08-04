@@ -1,0 +1,311 @@
+var express = require('express');
+var bodyParser = require('body-parser');
+const session = require('express-session');
+var mongoose = require('mongoose');
+
+// Core Modules
+var fs = require('fs');
+var path = require('path');
+var util = require('util');
+
+// NLP Modules
+const natural = require('natural');
+const ml = require('ml-sentiment')();
+var algorithmia = require("algorithmia");
+var client = algorithmia("simYi/0ziOKGNge4PedKMON0lT81");
+var SummaryTool = require('node-summary');
+
+
+// Natural Global Inits
+var sentence = new natural.SentenceTokenizer();
+var words = new natural.WordTokenizer();
+var Trie = natural.Trie;
+var trie = new Trie(false);
+var summary = new Trie(false);
+var TfIdf = natural.TfIdf;
+var tfidf = new TfIdf();
+
+
+// Google 
+var tfidfResult = {};
+var entityResult = [];
+var summaryResult = [];
+var bio = [];
+var nlp = {};
+
+// Set Router
+var router = express.Router();
+
+// Set application/x-www-form-urlencoded Parser
+var urlencodedParser = bodyParser.urlencoded({
+  extended: false
+});
+
+// Data models
+let User = require('../models/users');
+let Vacancie = require('../models/vacancies');
+
+router.get('/', (request, response) => {
+    // Get raw data
+    User.find({})
+        .then((users) => {response.json({applicants: users})})
+        .catch((err) => {response.json({error: "Something went wrong"})});
+});
+
+
+router.get('/analyze/:id', (request, response) => {
+
+    // Store Parameter
+    var _id = request.params.id;
+
+    // Get Data from DB
+    User.findOne({_id: _id})
+        .populate('origins', 'tags title', 'Vacancie')
+        .then((users) => {
+
+            let tags = users.origins[0].tags;
+            let title = users.origins[0].title;
+            let corpus = get_corpus(users.nlp.input.ml);
+            let cleanText = sentence.tokenize(corpus[1]);
+            let tokens = words.tokenize(corpus[1]);
+            
+            // GET - Digital Trie per Token
+            let result = _get_digital_trie(tags, tokens);
+            let len = corpus[1].length;
+            let ratio = cleanText.length / len * 100;
+            // console.log(tokens.length/cleanText.length);
+
+            // GET - Tf-idf
+            tfidf.addDocument(corpus[1]);
+            tfidf.listTerms(0).forEach(function(item) {
+                tfidfResult[item.term] = item.tfidf;
+            });
+            let tfidfScore = _get_tfidf_score(tfidfResult);
+            console.log(tfidfScore);
+
+            // GET - Sentiment
+            let sentiment = {};
+            for(let i=0;i<tokens.length;i++) {
+                sentiment[tokens[i]] = ml.classify(tokens[i]);
+            }
+            
+            // GET - Entity Recognition
+            algorithmia.client("simYi/0ziOKGNge4PedKMON0lT81")
+                .algo("StanfordNLP/Java2NER/0.1.1")
+                .pipe(corpus[1])
+                .then(function(data) {
+                    var keys = Object.keys(data.result);
+                    recursiveIter(data.result, 'ORGANIZATION');
+                    // console.log(entityResult);
+                });
+
+            // GET - Summary
+            for(let i=0;i<tags.length;i++) {
+                bio = _summary(tags[i], cleanText);
+            }
+            let textTitle = 'Motivation letter';
+            SummaryTool.summarize(textTitle, corpus[1], function(err, summary) {
+                if(err) console.log("Something went wrong man!");
+             
+                console.log(summary);
+             
+                console.log("Original Length " + (textTitle.length + corpus[1].length));
+                console.log("Summary Length " + summary.length);
+                console.log("Summary Ratio: " + (100 - (100 * (summary.length / (textTitle.length + corpus[1].length)))));
+            });
+            
+            // Update Document
+            let output = {};
+
+            // Set Values
+            output.tfidf = tfidfResult;
+            output.summary = bio;
+            output.trie = {
+                result: result[0],
+                score: result[1]
+            };
+            output.status = 'check';
+            output.score = 0;
+
+            // Append to User-Object
+            users.output = output;
+
+            // Update Document in MongoDB
+            // Return
+            return users.save(function(err) {
+                if(err) {
+                    console.log(err);
+                } else {
+                    // response.json({msg: 'successfully updated'})
+                    response.redirect('/jobs/dashboard/');
+                }
+            });
+            
+            // Render VIEW
+            // response.render('nlp_single', {
+            //     layout: false,
+            //     title: 'iEmployee - NLP Single View',
+            //     user: users,
+            //     raw: users.nlp.input.ml,
+            //     corpus: corpus[1],
+            //     trie: result[0],
+            //     trieScore: result[1],
+            //     tfidf: tfidfResult,
+            //     summary: bio
+            // });
+
+        })
+        .catch((err) => console.log(err));
+     
+});
+
+router.get('/api/:id', function (request, response) {
+    // Store Id
+    let objId = request.params.id;    
+    // Send User-Object to API
+    User.findOne({_id: objId})
+        .populate('origins', 'title', 'Vacancie')
+        .then((users) => response.json(users))
+        .catch((err) => console.log(err));
+}); 
+
+router.get('/view/:id', function (request, response) {
+    // Store Id
+    let objId = request.params.id;    
+    // Send View to Render Engine
+    User.findOne({_id: objId})
+        .populate('origins', 'title', 'Vacancie')
+        .then((users) => {
+            // Render View
+            response.render('nlp_single', {
+                layout: false,
+                user: users
+            });
+        })
+        .catch((err) => console.log(err));
+}); 
+
+function get_corpus(string) {
+    
+    const regex = /(Dear.*)\sYours.*sincerely.*$/gm;
+    var str = string;
+    var m;
+    var res = [];
+
+    while ((m = regex.exec(str)) !== null) {
+        // Avoid infinite loops with zero-width matches
+        if (m.index === regex.lastIndex) {
+            regex.lastIndex++;
+        }
+        m.forEach((match, groupIndex) => {
+            res.push(`${match}`);
+        });
+      return res;
+    }
+}
+
+/**
+ * 
+ * @param {object} tfidf
+ * @return {float} 
+ */
+function _get_tfidf_score(tfidf) {
+    let values = Object.values(tfidf);
+    let length = values.length;
+    var max = values.reduce((a, b) => { return Math.max(a, b) });
+    return max/length*100;
+}
+
+/**
+ * 
+ * @param {array} tags 
+ * @param {array} tokens
+ * @return {array} [0] => Object with results; [1] => Score
+ *   
+ */
+function _get_digital_trie(tags, tokens) {
+    // Init return obj
+    let result = {};
+    // Add Token to Trie
+    trie.addStrings(tokens);
+    // Make a basic digital trie
+    for(let i = 0;i<tags.length;i++) {
+        if(trie.contains(tags[i])) {
+            result[tags[i]] = 1;
+        } else {
+            result[tags[i]] = 0;
+        }
+    }
+    // Score calculation
+    let values = Object.values(result);
+    let sum = values.reduce(function(acc, val) { return acc + val; });
+    let divider = tags.length;
+    let score = sum.toPrecision(6) / divider.toPrecision(6) * 100;
+    // Return
+    return [result, score];
+}
+
+/**
+ * 
+ * @param {string} tag 
+ * @param {array} corpus 
+ * @return array[objs] => Object accessible via input property 
+ */
+function _summary(tag, corpus) {
+    // Create RegEx Pattern
+    let patt = new RegExp(".*"+tag+".*$", "gi");
+    // Iterate through corpus array
+    for(let i=0;i<corpus.length;i++) {
+        // Execute Search
+        var res = patt.exec(corpus[i]);
+        // if not null
+        if(res !== null) {
+            summaryResult.push(res);
+        }
+    }
+    return summaryResult;
+}
+
+
+/**
+ * 
+ * @param {object} obj 
+ * @param {string} entity
+ * @return {array}  
+ */
+function recursiveIter(obj, entity) {
+    for (i in obj) {
+        if (typeof obj[i] == "object") {
+            recursiveIter(obj[i], entity)
+        } else if(obj[i] == entity) {
+            entityResult.push(obj[0].toString());
+        }
+    } 
+    return entityResult;
+}
+
+function _update(query, output) {
+    User.update(
+        query,
+        {$set: {'users.output.tfidf': tfidfResult}},
+        function(err) {
+        // Check if error
+        if(err) {
+        // Errorhandler
+        console.log(err);
+        response.sendStatus(403);
+        } else {
+            // Redirect to Edit form
+            // response.redirect('/jobs/dashboard/');
+            // response.set({
+            //     'Content-Type': 'application/json',
+            //     'Connection': 'close',
+            // })
+            // response.json({user: output})
+        }
+    }); 
+
+}
+
+
+module.exports = router;

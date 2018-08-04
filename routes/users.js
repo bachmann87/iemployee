@@ -24,14 +24,15 @@ var urlencodedParser = bodyParser.urlencoded({
   extended: false
 });
 
+// Data models
+let User = require('../models/users');
+
 /**
  * Type: GET
  * View: User-Login
  * Scope: Applicant
  */
-router.get('/', function (request, response, next) {
-  response.json({"users": {"Allan Bachmann": true }});
-});
+
 
 /**
  * Type: POST
@@ -80,44 +81,18 @@ router.post('/submit', urlencodedParser, function (request, response, next) {
 
       // Store Objids as Array
       let objids = [];
+      let target = [];
       let index = objids.push(request.body.objid);
-      
+      let vcy = target.push(request.body.vacancy);
 
       // CV-Filepath; ML-Filepath
-      let cvPath = path.join(__dirname, '/../uploads/' + objids[index - 1] + '/original', cvFilename);
-      let mlPath = path.join(__dirname, '/../uploads/' + objids[index - 1] + '/original', mlFilename);
-      let rfPath = path.join(__dirname, '/../uploads/' + objids[index - 1] + '/original', rfFilename);
+      let cvPath = path.join(__dirname, '/../uploads/' + target[vcy - 1] + '/original', cvFilename);
+      let mlPath = path.join(__dirname, '/../uploads/' + target[vcy - 1] + '/original', mlFilename);
+      let rfPath = path.join(__dirname, '/../uploads/' + target[vcy - 1] + '/original', rfFilename);
 
       // Check Target Directory
-      let dir = path.join(__dirname, '/../uploads/', objids[index - 1]);
+      let dir = path.join(__dirname, '/../uploads/', target[vcy - 1]);
       createDirectories(dir);
-
-      // User Object
-      var user = {
-        name: name,
-        prename: prename,
-        email: email,
-        docs: {
-          cv: cvFilename,
-          ml: mlFilename,
-          rf: rfFilename
-        },
-        paths: [
-          cvPath,
-          mlPath,
-          rfPath
-        ],
-        origins: objids
-      }
-
-      // Move files
-      // let keys = Object.keys(user.docs);
-      // let values = Object.values(user.docs);
-      // for(let i=0;i<keys.length;i++) {
-      //   files[i].mv(values[i], function(err) {
-      //     if (err) { throw err; }
-      //   });
-      // }
 
       // Move CV to uploads/original/
       cv.mv(cvPath, function (err) {
@@ -140,46 +115,127 @@ router.post('/submit', urlencodedParser, function (request, response, next) {
         }
       });
 
-      // Extract Data from .docx, .pdf Files
-      data_extract(user);
+      // User Object
+      var user = {
+        _id: new mongoose.Types.ObjectId(),
+        name: name,
+        prename: prename,
+        email: email,
+        docs: {
+          cv: cvFilename,
+          ml: mlFilename,
+          rf: rfFilename
+        },
+        paths: [
+          cvPath,
+          mlPath,
+          rfPath
+        ],
+        origins: objids,
+        nlp: {
+          input: {}
+        },
+        output: {
+          tfidf: { 
+            "media": 1.612,
+            "data": 1.321
+          },
+          summary: [],
+          trie: {
+            result: [],
+            score: 0
+          },
+          status: 'times',
+          score: 0
+        }         
+      }
 
-      // Set Session Success
-      request.session.success = true;
+      // Move files
+      // let keys = Object.keys(user.docs);
+      // let values = Object.values(user.docs);
+      // for(let i=0;i<keys.length;i++) {
+      //   files[i].mv(values[i], function(err) {
+      //     if (err) { throw err; }
+      //   });
+      // }
 
-      // Render
-      response.render('success', {
-        layout: 'forms.hbs',
-        title: 'iEmployee - Recruitment Center',
-        success: false,
-        errors: request.session.errors,
-        data: user
-      });
+      // Extract Data from .docx, .pdf Files and generate new file
+      data_extract(user, target[vcy-1]);
 
-      // Empty Session Errors
-      request.session.errors = null;
+      // Wait until 
+      setTimeout(function() {
+        // Save new Applicant
+        let newUser = new User(user);
+        newUser.save(function(err) {
+          if(err) {
+            console.log(err);
+              return;
+          } else {
+              // Set Session Success
+              request.session.success = true;
+              // Render
+              response.render('success', {
+                layout: 'forms.hbs',
+                title: 'iEmployee - Application Process',
+                success: request.session.success,
+                errors: request.session.errors,
+                data: user
+              });
+              // Empty Session Errors
+              request.session.errors = null;
+          }
+        });  
+      }, 4000);
 
     }
-
     // Save Text to User-Object
     // user.text = fs.readFileSync(path.join(__dirname, '/../uploads', user.name+'_'+user.prename+'.txt'), 'UTF-8');
-
   }
 
 });
 
-function data_extract(user) {
-  for (let i = 0; i < user.paths.length; i++) {
-    // Extract CV
-    textract.fromFileWithPath(user.paths[i], function (error, text) {
+/**
+ * Type: DELETE 
+ * Data: Vacancy
+ * View: Dashboard
+ * Scope: Employer
+ */ 
+router.delete('/delete/:id', function(request, response) {
+  // Create Query Object
+  let query = {_id: request.params.id}
+    // Remove from MongoDB
+    User.remove(query, function(err) {
+      if(err) {
+        console.log(err);
+      } else {
+        response.render('dashboard', {
+          layout: false,
+          title: 'iEmployee - Dashboard'
+        });
+      }
+    });
+ });
+
+function data_extract(user, vacancy, format) {
+  // FileExtension
+  let fileExtension = format || '.txt';
+  let appendix = Object.keys(user.docs);
+  // Iterate through all files
+  for(let i = 0; i < user.paths.length; i++) {
+    // Extract Data
+    textract.fromFileWithPath(user.paths[i], (error, text) => {
       // Create Path + Filename
-      let filename = user.name + '_' + user.prename + '_' + [i] + '.txt';
-      let filepath = path.join(__dirname, '/../uploads/' + user.origins + '/parsed/', filename);
-      // Create file; Move to uploads/parsed/ dir 
-      fs.writeFile(filepath, text, function (err) {
-        if (err) throw err;
+      let filename = user.name+ '_' +user.prename+ '_' +appendix[i]+ fileExtension;
+      let filepath = path.join(__dirname, '/../uploads/' + vacancy + '/parsed/', filename);
+      // Store to User Object
+      user.nlp.input[appendix[i]] = text;;
+      // Create files
+      fs.writeFile(filepath, text, (err) => {
+        if(err) throw err; 
       });
     });
   }
+  return user;
 }
 
 function getDate() {

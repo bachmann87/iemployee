@@ -1,10 +1,13 @@
 let mongoose = require('mongoose');
+let Schema = mongoose.Schema;
 
 // Create Schema
-let vacanciesSchema = mongoose.Schema({
+let vacanciesSchema = Schema({
+  _id: Schema.Types.ObjectId,
   title: {
     type: String,
-    required: true
+    required: true,
+    ref: 'Users'
   },
   fte: {
     type: Number,
@@ -21,7 +24,15 @@ let vacanciesSchema = mongoose.Schema({
   tags: {
     type: Array,
     required: true
-  }
+  },
+  application: {
+    type: Number,
+    default: 0
+  },
+  applicants: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Users'
+  }]
 });
 var collectionName = 'vacancies'
 var Vacancie = module.exports = mongoose.model('Vacancie', vacanciesSchema, collectionName);

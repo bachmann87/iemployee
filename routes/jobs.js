@@ -30,6 +30,7 @@ const session = require('express-session');
 
 // Data models
 let Vacancie = require('../models/vacancies');
+let User = require('../models/users');
 
 
 // -------------------
@@ -121,8 +122,7 @@ router.post('/edit/:id', function(request, response) {
 
   // Convert Tags String to Array
   let str = request.body.tags;
-  str.trim();
-  let tags = str.split(',');
+  let tags = str.replace(/\s/g,'').replace(/(,)$/g,'').split(',');
 
   // Create Doc for MongoDB
   let vacancie = {};
@@ -173,7 +173,7 @@ router.get('/apply/:id', function(request, response) {
         job: objId,
         success: request.session.success,
         errors: request.session.errors,
-        vacancies: vacancies    
+        vacancies: vacancies 
       });
     }
   });
@@ -195,28 +195,36 @@ router.get('/dashboard', function(req, res, next) {
       util.log(chalk.blue.bold(err));
     } else {
 
-      // Cast Obj
-      let keys = Object.keys(vacancies);
-      let datasetJobs = [];
-      let dataset1 = [];
-      let dataset2 = [];
+      // Get all users
+      User.find({})
+        .populate('origins', 'title', 'Vacancie')
+        .then((users) => {
+            // Cast Obj
+            let keys = Object.keys(vacancies);
+            let datasetJobs = [];
+            let dataset1 = [];
+            let dataset2 = [];
 
-      // Iterate to Doc
-      for(let i=0;i<keys.length;i++) {
-        dataset1.push(Math.ceil(Math.random()*100));
-        dataset2.push(Math.ceil((Math.random()*20)*-1));
-        datasetJobs.push(vacancies[i].title);
-      }
+            // Iterate to Doc
+            for(let i=0;i<keys.length;i++) {
+              dataset1.push(Math.ceil(Math.random()*100));
+              dataset2.push(Math.ceil((Math.random()*20)*-1));
+              datasetJobs.push(vacancies[i].title);
+            }
 
-      // Render Page
-      res.render('dashboard', {
-        layout: false,
-        title: 'iEmployee - Dashboard',
-        vacancies: vacancies,
-        jobs: datasetJobs,
-        index_1: dataset1,
-        index_2: dataset2
-      });
+            console.log(users);
+            // Render Page
+            res.render('dashboard', {
+              layout: false,
+              title: 'iEmployee - Dashboard',
+              vacancies: vacancies,
+              jobs: datasetJobs,
+              index_1: dataset1,
+              index_2: dataset2,
+              users: users
+            });
+        })
+        .catch((err) => console.log(err));
     }
   });
 
@@ -248,10 +256,11 @@ router.post('/add', urlencodedParser, [
 
       // Convert Tags String to Array
       let str = request.body.tags;
-      let tags = str.split(',');
+      let tags = str.replace(/\s|(,)$/g,'').split(',');
 
       // Prepare Data for MongoDB
       let vacancie = new Vacancie();
+      vacancie._id = new mongoose.Types.ObjectId();
       vacancie.title = request.body.title;
       vacancie.fte = request.body.fte;
       vacancie.body = request.body.description;
@@ -265,10 +274,11 @@ router.post('/add', urlencodedParser, [
           return;
         } else {
 
-          response.render('dashboard', {
-            layout: false
-          });
-          // response.redirect('/jobs/dashboard');
+          // response.render('dashboard', {
+          //   layout: false
+          // });
+
+          response.redirect('/jobs/dashboard');
         }
       });
     }
@@ -280,7 +290,6 @@ router.post('/add', urlencodedParser, [
  * View: Dashboard
  * Scope: Employer
  */ 
-
  router.delete('/delete/:id', function(request, response) {
   // Create Query Object
   let query = {_id: request.params.id}
@@ -296,6 +305,5 @@ router.post('/add', urlencodedParser, [
       }
     });
  });
-
 
 module.exports = router;

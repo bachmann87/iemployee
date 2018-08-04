@@ -173,20 +173,17 @@
                   <div class="alert alert-danger">{{ this.msg }}</div>
                 {{/ each }}
               {{/ if }}
-            </div>
-            {{!-- Success --}}
-            {{# if expressFlash }}
-                <p><strong>FLASH!</strong> {{ expressFlash }}</p>
-            {{/ if }}           
+            </div>         
             <div class="table-responsive">
-              <table class="table table-bordered table-hover">
+              <table class="table table-sm table-bordered table-hover">
                 <thead>
                   <tr>
                     <th>Vakanz</th>
                     <th>Arbeitsort</th>
                     <th>Pensum</th>
                     <th>Tags</th>
-                    <th>Bearbeiten | Löschen</th>
+                    <th>Edit</th>
+                    <th>Löschen</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -196,16 +193,51 @@
                     <td>{{location}}</td>
                     <td>{{fte}}%</td>
                     <td>{{# tags}} {{[]}}, {{/ tags}}</td>
-                    <td>
-                      <div class="btn-group">
-                        <a href="/jobs/edit/{{_id}}" data-id="{{_id}}" class="btn btn-sm btn-outline-secondary edit-vacancy">Bearbeiten<a>
-                        <a data-id="{{_id}}" class="btn btn-sm btn-outline-secondary transfer-delete">Löschen</a>
-                      </div>                      
-                    </td>
+                    <td><a href="/jobs/edit/{{_id}}" class="btn btn-sm btn-outline-secondary edit-vacancy" data-id="{{_id}}">Bearbeiten</a></td>
+                    <td><a href="" class="btn btn-sm btn-outline-danger transfer-delete" data-id="{{_id}}">Löschen</a></td>
                   </tr>
                   {{/ vacancies}}
                 </tbody>
               </table>
+            </div>
+          </div>
+
+          <div id="vacancies" class="my-4 w-100">
+            <div class="">
+              <h5>Applikanten</h5>
+              <hr class="my-4">
+            </div>
+            <div>
+              <div class="table-responsive">
+                <table class="table table-sm table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <th>Profil</th>
+                      <th>Name</th>
+                      <th>E-Mail</th>
+                      <th>Vakanz</th>
+                      <th>NLP-Score</th>
+                      <th>NLP-Status</th>
+                      <th>NLP-Analyse</th>
+                      <th>Löschen</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {{# users}}
+                      <tr>
+                        <td>{{_id}}</td>
+                        <td>{{prename}} {{name}}</td>
+                        <td><a href="mailto:{{email}}">{{email}}</a></td>
+                        <td>{{#each origins}}{{this.title}}{{/each}}</td>
+                        <td>0</td>
+                        <td><a href="/nlp/view/{{_id}}" data-id="{{_id}}" class="nlp-view"><i class="fas fa-{{output.status}} fa-lg" style="text-align: center;"></i></a></td>
+                        <td><a href="/nlp/analyze/{{_id}}" class="btn btn-sm btn-outline-secondary">analysieren</a></td>
+                        <td><a href="" class="applicant-delete" data-id="{{_id}}"><i class="fas fa-trash fa-lg"></i></a></td>
+                      </tr>
+                    {{/ users}}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
 
@@ -232,20 +264,6 @@
             <canvas id="myChart" width="900" height="380"></canvas>
           </div>
 
-          <div id="vacancies" class="my-4 w-100">
-            <div class="">
-              <h5>Dateisystem</h5>
-              <hr class="my-4">
-            </div>
-            <div>
-              <div class="list-group">
-                <div class="list-group-item">
-                  <span class="feather" data-feather="folder"></span>
-                  Ordner 1
-                </div>
-              </div>
-            </div>
-          </div>
         </main>
       </div>
     </div>
@@ -323,14 +341,14 @@
     </div>
   </div>         
 
-  <script type="text/javascript" src="/js/delete.js"></script>
+    <script type="text/javascript" src="/js/delete.js"></script>
     <script type="text/javascript">
 
     const addVacancy = document.querySelector('#addVacancy');
     var treeVacancy = document.querySelector('#treeVacancy').style.display = 'none';
-
+    let chart = document.querySelector('#chart').style.display = 'none';
     /* addVacancy.addEventListener('click', function() {
-      let chart = document.querySelector('#chart').style.display = 'none';
+     
       let applicants = document.querySelector('#applicants').style.display = 'none';
       const vacancies = document.querySelector('#vacancies').style.display = 'block';
     }); */

@@ -35,7 +35,8 @@ const util = require('util');
 // Database
 // -------------------
 
-mongoose.connect('mongodb://localhost/iemployee');
+// mongoose.connect('mongodb://localhost/iemployee');
+mongoose.connect('mongodb+srv://admin:'+process.env.MONGO_ATLAS_PW+'@htwchur-cvkuc.mongodb.net/test?retryWrites=true')
 let db = mongoose.connection;
 
 // Check connection
@@ -55,6 +56,7 @@ db.on('error', function(err) {
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var jobsRouter = require('./routes/jobs');
+var nlpRouter = require('./routes/nlp');
 
 // -------------------
 // Express
@@ -71,9 +73,12 @@ app.engine('hbs', hbs({
   layoutsDir: __dirname + '/views/layouts/'
 }));
 
+app.enable('view cache');
+
 // Set Engine
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
+app.set('view cache', false);
 
 // Set Middlewares
 app.use(upload());
@@ -115,6 +120,7 @@ app.use(validator());
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/jobs', jobsRouter);
+app.use('/nlp', nlpRouter);
 
 // Catch 404
 app.use(function (req, res, next) {
