@@ -13,7 +13,7 @@ const natural = require('natural');
 const ml = require('ml-sentiment')();
 var algorithmia = require("algorithmia");
 var client = algorithmia("simYi/0ziOKGNge4PedKMON0lT81");
-var SummaryTool = require('node-summary');
+// var SummaryTool = require('node-summary');
 
 
 // Natural Global Inits
@@ -103,16 +103,16 @@ router.get('/analyze/:id', (request, response) => {
             for(let i=0;i<tags.length;i++) {
                 bio = _summary(tags[i], cleanText);
             }
-            let textTitle = 'Motivation letter';
-            SummaryTool.summarize(textTitle, corpus[1], function(err, summary) {
-                if(err) console.log("Something went wrong man!");
+            // let textTitle = 'Motivation letter';
+            // SummaryTool.summarize(textTitle, corpus[1], function(err, summary) {
+            //     if(err) console.log("Something went wrong man!");
              
-                console.log(summary);
+            //     console.log(summary);
              
-                console.log("Original Length " + (textTitle.length + corpus[1].length));
-                console.log("Summary Length " + summary.length);
-                console.log("Summary Ratio: " + (100 - (100 * (summary.length / (textTitle.length + corpus[1].length)))));
-            });
+            //     console.log("Original Length " + (textTitle.length + corpus[1].length));
+            //     console.log("Summary Length " + summary.length);
+            //     console.log("Summary Ratio: " + (100 - (100 * (summary.length / (textTitle.length + corpus[1].length)))));
+            // });
             
             // Update Document
             let output = {};
