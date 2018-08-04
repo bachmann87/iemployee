@@ -4,7 +4,7 @@
   "description": "",
   "private": true,
   "scripts": {
-    "start": "nodemon ./bin/server --port 3000"
+    "start": "node ./bin/server"
   },
   "dependencies": {
     "@google-cloud/language": "^1.2.0",
