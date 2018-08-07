@@ -41,7 +41,7 @@ var urlencodedParser = bodyParser.urlencoded({
   extended: false
 });
 
-// Data models
+// Data models from MongoDB
 let User = require('../models/users');
 let Vacancie = require('../models/vacancies');
 
@@ -103,18 +103,12 @@ router.get('/analyze/:id', (request, response) => {
             for(let i=0;i<tags.length;i++) {
                 bio = _summary(tags[i], cleanText);
             }
-            // let textTitle = 'Motivation letter';
-            // SummaryTool.summarize(textTitle, corpus[1], function(err, summary) {
-            //     if(err) console.log("Something went wrong man!");
-             
-            //     console.log(summary);
-             
-            //     console.log("Original Length " + (textTitle.length + corpus[1].length));
-            //     console.log("Summary Length " + summary.length);
-            //     console.log("Summary Ratio: " + (100 - (100 * (summary.length / (textTitle.length + corpus[1].length)))));
-            // });
-            
-            // Update Document
+
+            // -------------
+            // Update MongoDB
+            // -------------
+
+            // Init Object
             let output = {};
 
             // Set Values

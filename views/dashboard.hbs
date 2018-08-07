@@ -100,7 +100,7 @@
 
     <div class="container-fluid">
       <div class="row">
-        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+        {{!-- <nav class="col-md-2 d-none d-md-block bg-light sidebar">
           <div class="sidebar-sticky">
             <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
               <span>Infrastructure</span>
@@ -159,9 +159,9 @@
               </li>
             </ul>
           </div>
-        </nav>
+        </nav> --}}
 
-        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+        <main role="main" class="col-md-12 ml-sm-auto col-lg-12 px-4">
 
           <div id="applicants" class="my-4 w-100">
             <br>
@@ -241,7 +241,7 @@
             </div>
           </div>
 
-          <div id="chart" class="my-4 w-100">
+          {{!-- <div id="chart" class="my-4 w-100">
             <div class="">
               <div class="h5 d-flex justify-content-between">
                   <div class="dropdown">
@@ -262,7 +262,7 @@
               <hr class="my-4">
             </div>
             <canvas id="myChart" width="900" height="380"></canvas>
-          </div>
+          </div> --}}
 
         </main>
       </div>
@@ -344,25 +344,26 @@
     <script type="text/javascript" src="/js/delete.js"></script>
     <script type="text/javascript">
 
-    const addVacancy = document.querySelector('#addVacancy');
-    var treeVacancy = document.querySelector('#treeVacancy').style.display = 'none';
-    let chart = document.querySelector('#chart').style.display = 'none';
+    // const addVacancy = document.querySelector('#addVacancy'); --}}
+    // var treeVacancy = document.querySelector('#treeVacancy').style.display = 'none';
+   // let chart = document.querySelector('#chart').style.display = 'none';
+
     /* addVacancy.addEventListener('click', function() {
      
       let applicants = document.querySelector('#applicants').style.display = 'none';
       const vacancies = document.querySelector('#vacancies').style.display = 'block';
     }); */
 
-    const showVacancy = document.querySelector('#showVacancy');
-    showVacancy.addEventListener('click', function() {
-      const treeVacancy = document.querySelector('#treeVacancy');
+    // const showVacancy = document.querySelector('#showVacancy');
+    // showVacancy.addEventListener('click', function() {
+      // const treeVacancy = document.querySelector('#treeVacancy');
       // Check state
-      if(treeVacancy.style.display === 'block') {
-        treeVacancy.style.display = 'none';
-      } else {
-        treeVacancy.style.display = 'block';
-      }
-    });
+      // if(treeVacancy.style.display === 'block') {
+        // treeVacancy.style.display = 'none';
+      // } else {
+      //   treeVacancy.style.display = 'block';
+      // }
+    // });
 
 
 
@@ -376,46 +377,6 @@
 
     <!-- Graphs -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
-    <script>
-      var str = "{{jobs}}";
-      var labels = str.split(',');
-      var ctx = document.getElementById("myChart");
-      var myChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: labels,
-          datasets: [{
-            data: [{{index_1}}],
-            lineTension: 0,
-            backgroundColor: 'rgba(79,195,247,0.5)',
-            borderColor: 'rgba(79,195,247,1)',
-            borderWidth: 2,
-            pointBackgroundColor: '#007bff'
-          },
-          {
-            data: [{{index_2}}],
-            lineTension: 0,
-            backgroundColor: 'rgba(2,136,209,0.5)',
-            borderColor: 'rgba(2,136,209,1)',
-            borderWidth: 2,
-            pointBackgroundColor: '#007bff'
-          },
-          ]
-        },
-        options: {
-          scales: {
-            yAxes: [{
-              ticks: {
-                beginAtZero: false
-              }
-            }]
-          },
-          legend: {
-            display: false,
-          }
-        }
-      });
-  
-    </script>
+    {{!-- <script src="/js/chart.js"></script> --}}
   </body>
 </html>

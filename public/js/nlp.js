@@ -25,7 +25,8 @@ $(document).ready(function() {
             _bio(data);
             // Set Trie
             _trie(data);
-            
+            // Parse Mobile
+            _parse_mobile(data);
         }, 
         error: function(err) {
             console.log(err);
@@ -57,6 +58,12 @@ $(document).ready(function() {
         let keys = Object.keys(data.output.trie.result);
         let score = data.output.trie.score;
         // Iterate 
+    }
+
+    function _parse_mobile(data) {
+        // ...
+        console.log(data.nlp.input.cv);
+        
     }
 
 } );
