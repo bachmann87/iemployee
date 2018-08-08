@@ -1,7 +1,3 @@
-![alt text][logo]
-
-[logo]: https://github.com/bachmann87/iemployee/public/img/icon-192x192.png "iEmployee Brand"
-
 # API Referenz Dokumentation
 Das Lehrprodukt ist eine Node.js Applikation, wobei NLP-Verfahren implementiert wurden. Das Ziel des Lehrprojekts war eine «eRecruiting»-Lösung (Prototyp) zu programmieren. Folgende Frameworks und Technologien wurden für das Lehrprojekt verwendet:
 
@@ -40,7 +36,7 @@ Eine kurze Anleitung wie man am besten die Applikation lokal installiert und tes
 6. Applikation via ``localhost:port/`` aufrufen
 
 
-> Info: Siehe Kapitel «Deployment», falls die Applikation lokal nicht funktionieren sollte.
+> :heavy_exclamation_mark: Siehe Kapitel «Deployment», falls die Applikation lokal nicht funktionieren sollte.
 
 # NLP Funktionen
 > Nachfolgend alle benutzerdefinierten NLP-Funktionen, welche ich im Rahmen des Lehrprojekts programmiert habe. Nachfolgend alle NLP-Funktionen:
@@ -154,6 +150,64 @@ function _summary(tag, corpus) {
 }
 ```
 
+Die Funktion **recursiveIter()** iteriert rekursiv durch das Resultat der StanfordNLP Entity Recognition Pipeline.
+```javascript
+/**
+ * 
+ * @param {object} obj 
+ * @param {string} entity
+ * @return {array}  
+ */
+function recursiveIter(obj, entity) {
+    for (i in obj) {
+        if (typeof obj[i] == "object") {
+            recursiveIter(obj[i], entity)
+        } else if(obj[i] == entity) {
+            entityResult.push(obj[0].toString());
+        }
+    } 
+    return entityResult;
+}
+```
+
+# :file_folder: Funktionen Dateisystem
+> Nebst den Hauptfunktionen für die NLP-Aufgaben, gibt es auch weitere Funktionen, die für das Lehrprojekt wichtig waren. Nachfolgend alle Funktionen mit dem Dateisystem:
+
+Die Funktion **getDate()** generiert ein String mit dem Datum für die Namenskonvention nach der Datenübertragung/Datenextrahierung.
+```javascript
+function getDate() {
+  // Get Partials
+  var today = new Date();
+  var dd = today.getDate();
+  var mm = today.getMonth() + 1;
+  var yyyy = today.getFullYear() + '';
+  // Append Zero if needed
+  if (dd < 10) {
+    dd = '0' + dd
+  }
+  // Append Zero if needed
+  if (mm < 10) {
+    mm = '0' + mm
+  }
+  // Build Date String
+  today = mm + dd + yyyy.substr(2, 2);
+  return today;
+}
+```
+
+Die Funktion **createDirectories()** erstellt ein entsprechendes Verzeichnis auf dem Server, sobald eine Bewerbung übermittelt wird.
+```javascript
+function createDirectories(dir) {
+  if (fs.existsSync(dir)) {
+    return;
+  } else {
+    // Parent + Subdirectories
+    fs.mkdirSync(dir);
+    fs.mkdirSync(path.join(dir, 'original'));
+    fs.mkdirSync(path.join(dir, 'parsed'));
+  }
+};
+```
 
 
 # Routing
@@ -172,44 +226,3 @@ Die Applikation wurde mit **Heroku Dyno** veröffentlicht. Heroku ist eine Platt
 
 > Eine benutzerdefinierte Domäne [https://iemployee.ch](https://iemployee.ch) konnte aus technologischen Gründen nicht verwendet werden. Die Anpassung der ANAME- resp. CNAME-Targets konnten beim DNS-Provider «Hostpoint» nicht wie gewünscht eingestellt werden. Siehe [Dokumentation](https://devcenter.heroku.com/articles/custom-domains) von Heroku.
 
-
-
-```javascript
-// User Object
-var user = {
-  _id: new mongoose.Types.ObjectId(),
-  name: name,
-  prename: prename,
-  email: email,
-  docs: {
-    cv: cvFilename,
-    ml: mlFilename,
-    rf: rfFilename
-  },
-  paths: [
-    cvPath,
-    mlPath,
-    rfPath
-  ],
-  origins: Schema.Types.ObjectId,
-  nlp: {
-    input: {
-      cv: 'Lebenslauf',
-      ml: 'Motivationschreiben',
-      rf: 'Arbeitszeugnis'
-    },
-    output: {
-      tfidf: [{
-        terms: []
-      }],
-      sentiment: [{
-        cv: 0
-      }],
-      entities: [{
-        organisation: []
-      }],
-      score: 0
-    } 
-  }
-}
-```
