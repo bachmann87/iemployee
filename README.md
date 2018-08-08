@@ -36,14 +36,14 @@ Eine kurze Anleitung wie man am besten die Applikation lokal installiert und tes
 2. Alle Abhängigkeiten installieren mit: ``npm install``
 3. Applikation starten mit: ``npm start`` oder mit ``node .\bin\server``
 4. Optional kann man einen Port-Flag angeben: ``node .\bin\server --port 8080`` Der Port ist frei wählbar - Standardport = 3000
-5. In der Konsole erscheint **NodeApp started** und **MongoDB started**
+5. In der Konsole erscheint ``NodeApp started`` und ``MongoDB started``
 6. Applikation via ``localhost:port/`` aufrufen
 
 
 > Info: Siehe Kapitel «Deployment», falls die Applikation lokal nicht funktionieren sollte.
 
 # NLP Funktionen
-Nachfolgend alle benutzerdefinierten NLP-Funktionen, welche ich im Rahmen des Lehrprojekts programmiert habe. Nachfolgend alle NLP-Funktionen:
+> Nachfolgend alle benutzerdefinierten NLP-Funktionen, welche ich im Rahmen des Lehrprojekts programmiert habe. Nachfolgend alle NLP-Funktionen:
 
 Die Funktion **data_extract()** zerlegt ein unstrukturiertes Dokument des Formats *.docx oder *.pdf. Weiterführend erstellt die Funktion eine *.txt-Datei und strukturiert den Dokumentnamen.
 
@@ -105,7 +105,7 @@ function _get_tfidf_score(tfidf) {
 }
 ```
 
-
+Die Funktion **_get_digital_trie** ist eine effiziente Präfix-basierende Suchfunktion.
 ```javascript
 function _get_digital_trie(tags, tokens) {
     // Init return obj
@@ -130,6 +130,32 @@ function _get_digital_trie(tags, tokens) {
 }
 ```
 
+Die Funktion **_summary()** fasst das Anschreiben zusammen, basierend auf Pattern Recognition.
+```javascript
+/**
+ * 
+ * @param {string} tag 
+ * @param {array} corpus 
+ * @return array[objs] => Object accessible via input property 
+ */
+function _summary(tag, corpus) {
+    // Create RegEx Pattern
+    let patt = new RegExp(".*"+tag+".*$", "gi");
+    // Iterate through corpus array
+    for(let i=0;i<corpus.length;i++) {
+        // Execute Search
+        var res = patt.exec(corpus[i]);
+        // if not null
+        if(res !== null) {
+            summaryResult.push(res);
+        }
+    }
+    return summaryResult;
+}
+```
+
+
+
 # Routing
 Aufgrund der Applikationsgrösse wurde ein URL-Routing-Verfahren angewendet. Der Vorteil eines Routers ist die Separation der verschiedenen Serverdateien. Dies hat zufolge, dass der gesamte Source Code der Applikation übersichtlicher gestaltet werden kann. Der Dateipfad für die Scripts ist ``/routes``. Nachfolgend alle verwendeten Server-Router: 
 
@@ -139,6 +165,14 @@ Aufgrund der Applikationsgrösse wurde ein URL-Routing-Verfahren angewendet. Der
 - **routes/users.js** Middleware für die Formularübermittlung
 
 > Für weitere Informationen betreffend URL-Routing siehe [Dokumentation](https://expressjs.com/en/guide/routing.html) von Express.
+
+
+# Deployment
+Die Applikation wurde mit **Heroku Dyno** veröffentlicht. Heroku ist eine Plattform für Cloud-Applikationen. Die Veröffentlichung erfolgt dabei via GitHub oder Heroku CLI. Da es den Rahmen für diese Arbeit sprengen würde, wurde auf eine **Staging Pipeline** verzichtet, d.h. das Deployment erfolgt direkt mit dem Master Branch. Die Applikation aufrufbar unter: [iEmployee](https://iemployee.herokuapps.com)
+
+> Eine benutzerdefinierte Domäne [https://iemployee.ch](https://iemployee.ch) konnte aus technologischen Gründen nicht verwendet werden. Die Anpassung der ANAME- resp. CNAME-Targets konnten beim DNS-Provider «Hostpoint» nicht wie gewünscht eingestellt werden. Siehe [Dokumentation](https://devcenter.heroku.com/articles/custom-domains) von Heroku.
+
+
 
 ```javascript
 // User Object
