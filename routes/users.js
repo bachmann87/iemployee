@@ -1,3 +1,4 @@
+// Server Modules
 var express = require('express');
 var upload = require('express-fileupload');
 var bodyParser = require('body-parser');
@@ -24,15 +25,15 @@ var urlencodedParser = bodyParser.urlencoded({
   extended: false
 });
 
-// Data models
+//--------------
+// MongoDB
+//--------------
 let User = require('../models/users');
 
-/**
- * Type: GET
- * View: User-Login
- * Scope: Applicant
- */
 
+//--------------
+// Routers
+//--------------
 
 /**
  * Type: POST
@@ -150,15 +151,6 @@ router.post('/submit', urlencodedParser, function (request, response, next) {
         }         
       }
 
-      // Move files
-      // let keys = Object.keys(user.docs);
-      // let values = Object.values(user.docs);
-      // for(let i=0;i<keys.length;i++) {
-      //   files[i].mv(values[i], function(err) {
-      //     if (err) { throw err; }
-      //   });
-      // }
-
       // Extract Data from .docx, .pdf Files and generate new file
       data_extract(user, target[vcy-1]);
 
@@ -215,6 +207,10 @@ router.delete('/delete/:id', function(request, response) {
       }
     });
  });
+
+//--------------
+// Functions
+//--------------
 
 function data_extract(user, vacancy, format) {
   // FileExtension

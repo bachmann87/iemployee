@@ -36,7 +36,7 @@ Eine kurze Anleitung wie man am besten die Applikation lokal installiert und tes
 6. Applikation via ``localhost:port/`` aufrufen
 
 
-> :heavy_exclamation_mark: Siehe Kapitel «Deployment», falls die Applikation lokal nicht funktionieren sollte.
+> Siehe Kapitel «Deployment», falls die Applikation lokal nicht funktionieren sollte.
 
 # NLP Funktionen
 > Nachfolgend alle benutzerdefinierten NLP-Funktionen, welche ich im Rahmen des Lehrprojekts programmiert habe. Nachfolgend alle NLP-Funktionen:
@@ -150,6 +150,14 @@ function _summary(tag, corpus) {
 }
 ```
 
+Die Funktion **tokenize()** segmentiert den Textkorpus nach pro Satzzeichen oder Wort.
+```javascript
+let corpus = get_corpus(users.nlp.input.ml);
+let cleanText = sentence.tokenize(corpus[1]);
+let tokens = words.tokenize(corpus[1]);
+```
+
+
 Die Funktion **recursiveIter()** iteriert rekursiv durch das Resultat der StanfordNLP Entity Recognition Pipeline.
 ```javascript
 /**
@@ -209,6 +217,16 @@ function createDirectories(dir) {
 };
 ```
 
+Die Funktion **grab()** ermöglicht ein Argument Flag für den gewünschten Port.
+```javascript
+/**
+ * Argument Variable grab
+ */
+function grab(flag) {
+  let index = process.argv.indexOf(flag);
+  return (index === -1) ? null : process.argv[index + 1];
+}
+```
 
 # Routing
 Aufgrund der Applikationsgrösse wurde ein URL-Routing-Verfahren angewendet. Der Vorteil eines Routers ist die Separation der verschiedenen Serverdateien. Dies hat zufolge, dass der gesamte Source Code der Applikation übersichtlicher gestaltet werden kann. Der Dateipfad für die Scripts ist ``/routes``. Nachfolgend alle verwendeten Server-Router: 
@@ -222,9 +240,9 @@ Aufgrund der Applikationsgrösse wurde ein URL-Routing-Verfahren angewendet. Der
 
 
 # Deployment
-Die Applikation wurde mit **Heroku Dyno** veröffentlicht. Heroku ist eine Plattform für Cloud-Applikationen. Die Veröffentlichung erfolgt dabei via GitHub oder Heroku CLI. Da es den Rahmen für diese Arbeit sprengen würde, wurde auf eine **Staging Pipeline** verzichtet, d.h. das Deployment erfolgt direkt mit dem Master Branch. Die Applikation aufrufbar unter: [iEmployee](https://iemployee.herokuapps.com)
+Die Applikation wurde mit **Heroku Dyno** veröffentlicht. Heroku ist eine Plattform für Cloud-Applikationen. Die Veröffentlichung erfolgt dabei via GitHub oder Heroku CLI. Da es den Rahmen für diese Arbeit sprengen würde, wurde auf eine **Staging Pipeline** verzichtet, d.h. das Deployment erfolgt direkt mit dem Master Branch. Die Applikation ist mit SSL-Zertifizierung aufrufbar unter: [iEmployee](https://iemployee.herokuapps.com)
 
-> Eine benutzerdefinierte Domäne [https://iemployee.ch](https://iemployee.ch) konnte aus technologischen Gründen nicht verwendet werden. Die Anpassung der ANAME- resp. CNAME-Targets konnten beim DNS-Provider «Hostpoint» nicht wie gewünscht eingestellt werden. Siehe [Dokumentation](https://devcenter.heroku.com/articles/custom-domains) von Heroku.
+> Eine benutzerdefinierte Domäne [http://iemployee.ch](http://iemployee.ch) existiert ebenfalls, jedoch ohne SSL-Zertifikat.
 
 # License
 Copyright (c) 2018 Allan Bachmann

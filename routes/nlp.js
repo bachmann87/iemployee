@@ -1,3 +1,4 @@
+// Server Modules
 var express = require('express');
 var bodyParser = require('body-parser');
 const session = require('express-session');
@@ -15,8 +16,7 @@ var algorithmia = require("algorithmia");
 var client = algorithmia("simYi/0ziOKGNge4PedKMON0lT81");
 // var SummaryTool = require('node-summary');
 
-
-// Natural Global Inits
+// NLP Global Inits
 var sentence = new natural.SentenceTokenizer();
 var words = new natural.WordTokenizer();
 var Trie = natural.Trie;
@@ -25,15 +25,16 @@ var summary = new Trie(false);
 var TfIdf = natural.TfIdf;
 var tfidf = new TfIdf();
 
-
-// Google 
+// Global Variables 
 var tfidfResult = {};
 var entityResult = [];
 var summaryResult = [];
 var bio = [];
 var nlp = {};
 
+//--------------
 // Set Router
+//--------------
 var router = express.Router();
 
 // Set application/x-www-form-urlencoded Parser
@@ -41,9 +42,16 @@ var urlencodedParser = bodyParser.urlencoded({
   extended: false
 });
 
-// Data models from MongoDB
+//--------------
+// MongoDB
+//--------------
 let User = require('../models/users');
 let Vacancie = require('../models/vacancies');
+
+
+//--------------
+// Routers
+//--------------
 
 router.get('/', (request, response) => {
     // Get raw data
@@ -135,18 +143,6 @@ router.get('/analyze/:id', (request, response) => {
                 }
             });
             
-            // Render VIEW
-            // response.render('nlp_single', {
-            //     layout: false,
-            //     title: 'iEmployee - NLP Single View',
-            //     user: users,
-            //     raw: users.nlp.input.ml,
-            //     corpus: corpus[1],
-            //     trie: result[0],
-            //     trieScore: result[1],
-            //     tfidf: tfidfResult,
-            //     summary: bio
-            // });
 
         })
         .catch((err) => console.log(err));
@@ -178,6 +174,10 @@ router.get('/view/:id', function (request, response) {
         })
         .catch((err) => console.log(err));
 }); 
+
+//--------------
+// Functions
+//--------------
 
 function get_corpus(string) {
     
@@ -260,7 +260,6 @@ function _summary(tag, corpus) {
     return summaryResult;
 }
 
-
 /**
  * 
  * @param {object} obj 
@@ -278,28 +277,26 @@ function recursiveIter(obj, entity) {
     return entityResult;
 }
 
-function _update(query, output) {
-    User.update(
-        query,
-        {$set: {'users.output.tfidf': tfidfResult}},
-        function(err) {
-        // Check if error
-        if(err) {
-        // Errorhandler
-        console.log(err);
-        response.sendStatus(403);
-        } else {
-            // Redirect to Edit form
-            // response.redirect('/jobs/dashboard/');
-            // response.set({
-            //     'Content-Type': 'application/json',
-            //     'Connection': 'close',
-            // })
-            // response.json({user: output})
-        }
-    }); 
-
-}
-
+// function _update(query, output) {
+//     User.update(
+//         query,
+//         {$set: {'users.output.tfidf': tfidfResult}},
+//         function(err) {
+//         // Check if error
+//         if(err) {
+//         // Errorhandler
+//         console.log(err);
+//         response.sendStatus(403);
+//         } else {
+//             // Redirect to Edit form
+//             // response.redirect('/jobs/dashboard/');
+//             // response.set({
+//             //     'Content-Type': 'application/json',
+//             //     'Connection': 'close',
+//             // })
+//             // response.json({user: output})
+//         }
+//     }); 
+// }
 
 module.exports = router;
