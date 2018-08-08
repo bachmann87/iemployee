@@ -170,7 +170,7 @@ function recursiveIter(obj, entity) {
 }
 ```
 
-# :file_folder: Funktionen Dateisystem
+# Funktionen Dateisystem
 > Nebst den Hauptfunktionen für die NLP-Aufgaben, gibt es auch weitere Funktionen, die für das Lehrprojekt wichtig waren. Nachfolgend alle Funktionen mit dem Dateisystem:
 
 Die Funktion **getDate()** generiert ein String mit dem Datum für die Namenskonvention nach der Datenübertragung/Datenextrahierung.
@@ -226,3 +226,11 @@ Die Applikation wurde mit **Heroku Dyno** veröffentlicht. Heroku ist eine Platt
 
 > Eine benutzerdefinierte Domäne [https://iemployee.ch](https://iemployee.ch) konnte aus technologischen Gründen nicht verwendet werden. Die Anpassung der ANAME- resp. CNAME-Targets konnten beim DNS-Provider «Hostpoint» nicht wie gewünscht eingestellt werden. Siehe [Dokumentation](https://devcenter.heroku.com/articles/custom-domains) von Heroku.
 
+# License
+Copyright (c) 2018 Allan Bachmann
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
