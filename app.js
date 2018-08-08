@@ -17,6 +17,7 @@ const {
   check,
   validationResult
 } = require('express-validator/check');
+const PythonShell = require('python-shell');
 
 // NLP-Dependencies
 const textract = require('textract');
@@ -48,6 +49,15 @@ db.once('open', function() {
 // Check for DB-Errors
 db.on('error', function(err) {
   util.log(chalk.red.bold(err));
+});
+
+// -------------------
+// Python Shell
+// -------------------
+
+var pyshell = new PythonShell('test/test.py');
+pyshell.on('message', function(message) {
+  util.log(chalk.green.bold(message));
 });
 
 // -------------------

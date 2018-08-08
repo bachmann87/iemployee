@@ -1,3 +1,4 @@
 #!/usr/bin/env python
 
-print('Hello from Python')
+# Test if Python responses
+print('[Python started] - Status: [ok]')

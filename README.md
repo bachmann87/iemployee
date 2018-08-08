@@ -1,11 +1,11 @@
-# API Referenz Dokumentation
-Das Lehrprodukt ist eine Node.js Applikation, wobei NLP-Verfahren implementiert wurden. Das Ziel des Lehrprojekts war eine «eRecruiting»-Lösung (Prototyp) zu programmieren. Folgende Frameworks und Technologien wurden für das Lehrprojekt verwendet:
+# Lehrprojekt Dokumentation
+Das Lehrprojekt ist eine Node.js Applikation, wobei diverse NLP-Verfahren implementiert wurden. Das Ziel des Lehrprojekts war eine «eRecruiting»-Lösung (Prototyp) zu programmieren. Folgende Frameworks und Technologien wurden für das Lehrprojekt verwendet:
 
 - **Express** (Bibliothek für Node.js Core Modul HTTP)
 - **Express-Fileupload** (Express Extension für die Datenübertragung)
 - **Express-Session** (Express Extension für das Session Objekt)
 - **Express-Validator** (Express Extension für die Validierung von Formularen)
--	**Express-Handlebars** (Express Extension für das Verwenden von Handlebars)
+- **Express-Handlebars** (Express Extension für das Verwenden von Handlebars)
 - **Body-Parser** (Express Extension für das Auslesen von Formularübermittlungen) 
 - **MongoDB Atlas** (NoSQL-Datenbank)
 - **Mongoose** (Datenbank Framework für die Arbeit mit MongoDB)
