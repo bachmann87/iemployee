@@ -328,7 +328,8 @@ function _python_nltk(req, res, user) {
     // Execute Python Script
     PythonShell.run('python/natural.py', options, function(err,data) {
       if(err) res.send(err);
-        res.send(data[0].toString('utf8'));
+        // res.send(data[0].toString('utf8'));
+        res.send(data.toString('utf8'));
     });
 
 }
