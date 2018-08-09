@@ -272,7 +272,7 @@ rf = sys.argv[3]
 # Output
 print(word_tokenize(ml))
 ```
-
+> Falls die Applikation lokal getestet wird, dann muss Python 3.6 auf dem System installiert sein. Zusätzlich muss die Umgebungsvariable angepasst werden.
 
 
 # Routing
@@ -285,11 +285,18 @@ Aufgrund der Applikationsgrösse wurde ein URL-Routing-Verfahren angewendet. Der
 
 > Für weitere Informationen betreffend URL-Routing siehe [Dokumentation](https://expressjs.com/en/guide/routing.html) von Express.
 
-
 # Deployment
 Die Applikation wurde mit **Heroku Dyno** veröffentlicht. Heroku ist eine Plattform für Cloud-Applikationen. Die Veröffentlichung erfolgt dabei via GitHub oder Heroku CLI. Da es den Rahmen für diese Arbeit sprengen würde, wurde auf eine **Staging Pipeline** verzichtet, d.h. das Deployment erfolgt direkt mit dem Master Branch. Die Applikation ist mit SSL-Zertifizierung aufrufbar unter: [iEmployee](https://iemployee.herokuapps.com)
 
 > Eine benutzerdefinierte Domäne [http://iemployee.ch](http://iemployee.ch) existiert ebenfalls, jedoch ohne SSL-Zertifikat.
+
+# Debugging
+Das Debugging der veröffentlichten Version auf Heroku funktioniert wie folgt:
+
+1. [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli) installieren.
+2. Nach erfolgreicher Installation Befehlskonsole (cmd) öffnen und ``heroku login`` eingeben.
+3. Benutzername: ``info@ajaybachmann.ch`` und Passwort: ``q2w3p0o9ZZ!`` eingeben.
+4. Debug-Log aufrufen mit: ``heroku logs --tail -a iemployee``
 
 # License
 Copyright (c) 2018 Allan Bachmann
