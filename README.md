@@ -272,9 +272,7 @@ rf = sys.argv[3]
 # Output
 print(word_tokenize(ml))
 ```
-> Falls die Applikation lokal getestet wird, dann muss Python 3.6 auf dem System installiert sein. Zusätzlich muss die Umgebungsvariable angepasst werden.
-> Siehe Umgebungsvariable: ffff
-
+> Falls die Applikation lokal getestet wird, dann muss Python 3.6 auf dem System installiert sein.
 
 # Routing
 Aufgrund der Applikationsgrösse wurde ein URL-Routing-Verfahren angewendet. Der Vorteil eines Routers ist die Separation der verschiedenen Serverdateien. Dies hat zufolge, dass der gesamte Source Code der Applikation übersichtlicher gestaltet werden kann. Der Dateipfad für die Scripts ist ``/routes``. Nachfolgend alle verwendeten Server-Router: 

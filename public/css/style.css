@@ -217,7 +217,6 @@ footer {
 }
 
 .footer-link {
-  padding-right: 0.5em;
   color: #9e9e9e;
   text-decoration: underline #9e9e9e;
 }
@@ -488,6 +487,16 @@ https://github.com/silviomoreto/bootstrap-select/issues/1135
   display: inline !important;
 }
 
+.footer-1,
+.footer-2 {
+  padding-bottom: 1em;
+  line-height: normal;
+}
+
+.footer-2 {
+  text-align: right;
+}
+
 /* ------------------ */
 
 /*      Queries       */
@@ -509,5 +518,38 @@ https://github.com/silviomoreto/bootstrap-select/issues/1135
     max-width: 100%;
     right: 0;
     bottom: 0;
+  }
+
+  .item {
+    margin-bottom: 1em;
+  }
+
+  #myVideo {
+    height: auto !important;
+    width: auto !important;
+    max-width: none;
+  }
+
+  .discover-app {
+    margin-bottom: 1em;
+  }
+
+  .footer-1,
+  .footer-2 {
+    padding-bottom: 1em;
+    line-height: normal;
+    text-align: left;
+  }
+
+  .footer-link {
+    padding-right: 0;
+  }
+
+  .section-title {
+    margin-top: 2em;
+  }
+
+  .brand-divider {
+    display: none;
   }
 }
