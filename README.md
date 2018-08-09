@@ -273,7 +273,7 @@ rf = sys.argv[3]
 print(word_tokenize(ml))
 ```
 > Falls die Applikation lokal getestet wird, dann muss Python 3.6 auf dem System installiert sein. Zusätzlich muss die Umgebungsvariable angepasst werden.
-> Siehe Umgebungsvariable: 
+> Siehe Umgebungsvariable: ffff
 
 
 # Routing
