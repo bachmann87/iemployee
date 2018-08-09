@@ -17,6 +17,7 @@ Das Lehrprojekt ist eine Node.js Applikation, wobei diverse NLP-Verfahren implem
 - **Debug** (Debugging Utility)
 - **Nodemon** (Dateiüberwachung für die Entwicklung der Applikatio)n
 - **Chalk** (CSS Utility für die Konsole)
+- **Python-Shell** (Python 3.6)
 
 Weiterführend wurden diverse Kernmodule von Node.js verwendet. Diese werden nicht via ``npm install` installiert. Diese sind folgende:
 
@@ -32,7 +33,7 @@ Eine kurze Anleitung wie man am besten die Applikation lokal installiert und tes
 2. Alle Abhängigkeiten installieren mit: ``npm install``
 3. Applikation starten mit: ``npm start`` oder mit ``node .\bin\server``
 4. Optional kann man einen Port-Flag angeben: ``node .\bin\server --port 8080`` Der Port ist frei wählbar - Standardport = 3000
-5. In der Konsole erscheint ``NodeApp started`` und ``MongoDB started``
+5. In der Konsole erscheint ``NodeApp started``, ``MongoDB started`` und ``Python started``
 6. Applikation via ``localhost:port/`` aufrufen
 
 
@@ -227,6 +228,52 @@ function grab(flag) {
   return (index === -1) ? null : process.argv[index + 1];
 }
 ```
+# Python-Shell
+Die Applikation verfügt über eine Python Shell. Nachfolgend die Funktion in Node, welche das Python Skript anspricht.
+
+```javascript
+function _python_nltk(req, res, user) {
+
+    // Get Raw Text Data from User Object
+    var ml = user.nlp.input.ml;
+    var cv = user.nlp.input.cv;
+    var rf = user.nlp.input.rf;
+
+    // Create Options Object for Python
+    var options = {
+      args: [
+          ml,
+          cv,
+          rf
+      ]
+    }
+    
+    // Execute Python Script
+    PythonShell.run('python/natural.py', options, function(err,data) {
+      if(err) res.send(err);
+        res.send(data[0].toString('utf8'));
+    });
+
+}
+```
+Das Python-Skript nutzt NLTK als Natural Language Processing Bibliothek und ermöglicht eine Segementierung. Nachfolgend das Python Skript: 
+
+```python
+#!/usr/bin/env python
+import sys
+import re
+from nltk import word_tokenize
+
+# Get raw text data
+ml = sys.argv[1]
+cv = sys.argv[2]
+rf = sys.argv[3]
+
+# Output
+print(word_tokenize(ml))
+```
+
+
 
 # Routing
 Aufgrund der Applikationsgrösse wurde ein URL-Routing-Verfahren angewendet. Der Vorteil eines Routers ist die Separation der verschiedenen Serverdateien. Dies hat zufolge, dass der gesamte Source Code der Applikation übersichtlicher gestaltet werden kann. Der Dateipfad für die Scripts ist ``/routes``. Nachfolgend alle verwendeten Server-Router: 

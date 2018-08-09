@@ -224,7 +224,7 @@ function data_extract(user, vacancy, format) {
       let filename = user.name+ '_' +user.prename+ '_' +appendix[i]+ fileExtension;
       let filepath = path.join(__dirname, '/../uploads/' + vacancy + '/parsed/', filename);
       // Store to User Object
-      user.nlp.input[appendix[i]] = text;;
+      user.nlp.input[appendix[i]] = text;
       // Create files
       fs.writeFile(filepath, text, (err) => {
         if(err) throw err; 

@@ -5,7 +5,7 @@ $(document).ready(function() {
     // --------------
     $('.transfer-delete').on('click', function(e) {
         $target = $(e.target);
-        const id = $target.attr('data-id');
+        let id = $target.attr('data-id');
         $.ajax({
             type: 'DELETE',
             url: '/jobs/delete/'+id,
@@ -23,7 +23,7 @@ $(document).ready(function() {
     // ----------------
     $('.applicant-delete').on('click', function(e) {
         $target = $(e.target);
-        const id = $target.attr('data-id');
+        let id = $target.attr('data-id');
         $.ajax({
             type: 'DELETE',
             url: '/users/delete/'+id,

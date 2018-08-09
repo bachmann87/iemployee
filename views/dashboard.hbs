@@ -109,66 +109,6 @@
 
     <div class="container-fluid">
       <div class="row">
-        {{!-- <nav class="col-md-2 d-none d-md-block bg-light sidebar">
-          <div class="sidebar-sticky">
-            <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-              <span>Infrastructure</span>
-              <a class="d-flex align-items-center text-muted" href="#">
-                <span data-feather="plus-circle"></span>
-              </a>
-            </h6>
-            <ul class="nav flex-column">
-              <li class="nav-item">
-                <a class="nav-link" href="/jobs/dashboard">
-                  <span data-feather="layout"></span>
-                  Dashboard<span class="sr-only">(current)</span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a id="showVacancy" class="nav-link"><span data-feather="database"></span> Vakanzen</a>
-                <ul id="treeVacancy" class="tree">
-                  <li class="tree-item"><div class="">Übersicht</div></li>
-                  <li id="addVacancy" class="tree-item" data-toggle="modal" data-target="#add_vacancies"><div class="">Hinzufügen</div></li>
-                  <li class="tree-item"><div class="">Löschen</div></li>
-                  <li class="tree-item"><div class="">Aktualisieren</div></li>
-                </ul>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span data-feather="cpu"></span>
-                  NLP-Interface
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span data-feather="layers"></span>
-                  API-Integration
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span data-feather="bar-chart-2"></span>
-                  Reporting
-                </a>
-              </li>
-            </ul>
-
-            <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-              <span>Dateisystem</span>
-              <a class="d-flex align-items-center text-muted" href="#">
-                <span data-feather="plus-circle"></span>
-              </a>
-            </h6>
-            <ul class="nav flex-column mb-2">
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span data-feather="file-text"></span>
-                  Current month
-                </a>
-              </li>
-            </ul>
-          </div>
-        </nav> --}}
 
         <main role="main" class="col-md-12 ml-sm-auto col-lg-12 px-4">
 
@@ -225,7 +165,7 @@
                       <th>Name</th>
                       <th>E-Mail</th>
                       <th>Vakanz</th>
-                      <th>NLP-Score</th>
+                      <th>Python-NLP</th>
                       <th>NLP-Status</th>
                       <th>NLP-Analyse</th>
                       <th>Löschen</th>
@@ -238,10 +178,10 @@
                         <td>{{prename}} {{name}}</td>
                         <td><a href="mailto:{{email}}">{{email}}</a></td>
                         <td>{{#each origins}}{{this.title}}{{/each}}</td>
-                        <td>0</td>
+                        <td><a href="/nlp/python/{{_id}}" class="btn btn-sm btn-outline-secondary">analysieren</a></td>
                         <td><a href="/nlp/view/{{_id}}" data-id="{{_id}}" class="nlp-view"><i class="fas fa-{{output.status}} fa-lg" style="text-align: center;"></i></a></td>
                         <td><a href="/nlp/analyze/{{_id}}" class="btn btn-sm btn-outline-secondary">analysieren</a></td>
-                        <td><a href="" class="applicant-delete" data-id="{{_id}}"><i class="fas fa-trash fa-lg"></i></a></td>
+                        <td><a href="" class="applicant-delete"><i class="fas fa-trash fa-lg" data-id="{{_id}}"></i></a></td>
                       </tr>
                     {{/ users}}
                   </tbody>

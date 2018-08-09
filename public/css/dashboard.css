@@ -176,3 +176,8 @@ li.tree-item div {
   background-size: cover;
   background-position: center center;
 }
+
+/* NLP Single View */
+#myTable_info {
+  display: none;
+}

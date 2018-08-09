@@ -199,7 +199,7 @@
             <div class="row">
                 <div class="col-md-3" style="text-align: right;">
                     <h2>TF-IDF</h2>
-                    <div style="font-size: .75em;">Score: <span id="tfidfScore"></span></div>
+                    <div style="font-size: .75em;">TD-IDF Vektor</div>
                 </div>
                 <div class="col-md-6">
                     <div id="tries" class="table-responsive">
@@ -228,6 +228,28 @@
                     </div>                
                 </div>
             </div>        
+        </div>
+    </section>
+    <section style="padding-bottom: 2em;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3" style="text-align: right;">
+                    <h2>NER</h2>
+                    <div style="font-size: .75em;">Named Entity Recognition - StanfordNLP</div>                    
+                </div>
+                <div class="col-md-6">
+                    <div id="organisation" class="list-group">
+                       <div class="list-group-item">
+                           <b>Organisations</b>
+                       </div> 
+                    </div>
+                    <div id="locations" class="list-group">
+                       <div class="list-group-item">
+                           <b>Locations</b>
+                       </div> 
+                    </div>                    
+                </div>
+            </div>
         </div>
     </section>
     {{!-- Application JavaScript --}}

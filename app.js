@@ -38,7 +38,7 @@ const util = require('util');
 
 // mongoose.connect('mongodb://localhost/iemployee');
 // mongoose.connect('mongodb+srv://admin:'+process.env.MONGO_ATLAS_PW+'@htwchur-cvkuc.mongodb.net/test?retryWrites=true')
-mongoose.connect('mongodb+srv://admin:htwchur1@htwchur-cvkuc.mongodb.net/test?retryWrites=true')
+mongoose.connect('mongodb+srv://admin:htwchur1@htwchur-cvkuc.mongodb.net/test?retryWrites=false')
 let db = mongoose.connection;
 
 // Check connection

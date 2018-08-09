@@ -212,7 +212,6 @@ router.get('/dashboard', function(req, res, next) {
               datasetJobs.push(vacancies[i].title);
             }
 
-            console.log(users);
             // Render Page
             res.render('dashboard', {
               layout: false,
@@ -273,10 +272,6 @@ router.post('/add', urlencodedParser, [
           console.log(err);
           return;
         } else {
-
-          // response.render('dashboard', {
-          //   layout: false
-          // });
 
           response.redirect('/jobs/dashboard');
         }

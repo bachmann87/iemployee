@@ -3,6 +3,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 const session = require('express-session');
 var mongoose = require('mongoose');
+const PythonShell = require('python-shell');
 
 // Core Modules
 var fs = require('fs');
@@ -28,9 +29,12 @@ var tfidf = new TfIdf();
 // Global Variables 
 var tfidfResult = {};
 var entityResult = [];
+var entityResult_loc = [];
 var summaryResult = [];
 var bio = [];
 var nlp = {};
+var entResOrg;
+var entResLoc;
 
 //--------------
 // Set Router
@@ -103,46 +107,52 @@ router.get('/analyze/:id', (request, response) => {
                 .pipe(corpus[1])
                 .then(function(data) {
                     var keys = Object.keys(data.result);
-                    recursiveIter(data.result, 'ORGANIZATION');
-                    // console.log(entityResult);
+                    entResOrg = recursiveIter(data.result, 'ORGANIZATION');
+                    entResLoc = recursiveIter(data.result, 'LOCATION');
                 });
 
-            // GET - Summary
-            for(let i=0;i<tags.length;i++) {
-                bio = _summary(tags[i], cleanText);
-            }
+                // Wait until Stanford NLP is finished, unfortunately not chainable with then syntax
+                setTimeout(function() {
 
-            // -------------
-            // Update MongoDB
-            // -------------
+                    // GET - Summary
+                    for(let i=0;i<tags.length;i++) {
+                        bio = _summary(tags[i], cleanText);
+                    }
 
-            // Init Object
-            let output = {};
+                    // -------------
+                    // Update MongoDB
+                    // -------------
 
-            // Set Values
-            output.tfidf = tfidfResult;
-            output.summary = bio;
-            output.trie = {
-                result: result[0],
-                score: result[1]
-            };
-            output.status = 'check';
-            output.score = 0;
+                    // Init Object
+                    let output = {};
 
-            // Append to User-Object
-            users.output = output;
+                    // Set Values
+                    output.tfidf = tfidfResult;
+                    output.summary = bio;
+                    output.trie = {
+                        result: result[0],
+                        score: result[1]
+                    };
+                    output.status = 'check';
+                    output.score = 0;
+                    output.entities = {
+                        result: entResOrg
+                    }
 
-            // Update Document in MongoDB
-            // Return
-            return users.save(function(err) {
-                if(err) {
-                    console.log(err);
-                } else {
-                    // response.json({msg: 'successfully updated'})
-                    response.redirect('/jobs/dashboard/');
-                }
-            });
-            
+                    // Append to User-Object
+                    users.output = output;
+
+                    // Update Document in MongoDB
+                    // Return
+                    return users.save(function(err) {
+                        if(err) {
+                            console.log(err);
+                        } else {
+                            response.redirect('/jobs/dashboard/');
+                        }
+                    });
+                // Wait 4 seconds    
+                }, 4000);
 
         })
         .catch((err) => console.log(err));
@@ -174,6 +184,24 @@ router.get('/view/:id', function (request, response) {
         })
         .catch((err) => console.log(err));
 }); 
+
+router.get('/python/:id', function(req, res) {
+
+
+    // Store Id
+    let objId = req.params.id;
+
+    // Get Data from MongoDB
+    User.findOne({_id: objId})
+        .populate('origins', 'title', 'Vacancie')
+        .then((user) => {
+            // Execute Python
+            _python_nltk(req, res, user);
+        })
+        .catch((err) => console.log(err))
+
+
+});
 
 //--------------
 // Functions
@@ -271,32 +299,38 @@ function recursiveIter(obj, entity) {
         if (typeof obj[i] == "object") {
             recursiveIter(obj[i], entity)
         } else if(obj[i] == entity) {
-            entityResult.push(obj[0].toString());
+            if(entity === 'ORGANIZATION') {
+                entityResult.push(obj[0].toString());
+            } else if (entity === 'LOCATION') {
+                entityResult_loc.push(obj[0].toString());
+            }
         }
     } 
-    return entityResult;
+    return [entityResult, entityResult_loc];
 }
 
-// function _update(query, output) {
-//     User.update(
-//         query,
-//         {$set: {'users.output.tfidf': tfidfResult}},
-//         function(err) {
-//         // Check if error
-//         if(err) {
-//         // Errorhandler
-//         console.log(err);
-//         response.sendStatus(403);
-//         } else {
-//             // Redirect to Edit form
-//             // response.redirect('/jobs/dashboard/');
-//             // response.set({
-//             //     'Content-Type': 'application/json',
-//             //     'Connection': 'close',
-//             // })
-//             // response.json({user: output})
-//         }
-//     }); 
-// }
+function _python_nltk(req, res, user) {
+
+    // Get Raw Text Data from User Object
+    var ml = user.nlp.input.ml;
+    var cv = user.nlp.input.cv;
+    var rf = user.nlp.input.rf;
+
+    // Create Options Object for Python
+    var options = {
+      args: [
+          ml,
+          cv,
+          rf
+      ]
+    }
+    
+    // Execute Python Script
+    PythonShell.run('python/natural.py', options, function(err,data) {
+      if(err) res.send(err);
+        res.send(data[0].toString('utf8'));
+    });
+
+}
 
 module.exports = router;
