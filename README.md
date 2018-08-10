@@ -9,7 +9,7 @@ Das Lehrprojekt ist eine Node.js Applikation, wobei diverse NLP-Verfahren implem
 - **Body-Parser** (Express Extension für das Auslesen von Formularübermittlungen) 
 - **MongoDB Atlas** (NoSQL-Datenbank)
 - **Mongoose** (Datenbank Framework für die Arbeit mit MongoDB)
-- **HBS** (Handblebars Template Engine Machine)
+- **HBS** (Handlebars Template Engine Machine)
 - **Bootstrap 4.0.0** (CSS-Framework)
 - **Natural** (Node.js NLP Bibliothek)
 - **StanfordNLP** (Entity Recognition via Algorithmia)
