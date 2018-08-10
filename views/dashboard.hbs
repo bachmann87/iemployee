@@ -61,16 +61,6 @@
               </div>
             </li>
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">NLP-Interface</a>    
-              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <span class="dropdown-item-text"><b>Node.js</b></span>
-                <a class="dropdown-item" href="#">TF-IDF</a>
-                <span class="dropdown-item-text"><b>Python</b></span>
-                <a class="dropdown-item" href="#">Syntax Analysis</a>
-                <a class="dropdown-item" href="#">Sentiment Analysis</a>
-              </div>
-            </li>
-            <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">API-Integration</a>    
               <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                 <a class="dropdown-item" href="/nlp"><span data-feather="log-in"></span><span class="item-text"> API erkundigen</span></a>
@@ -157,9 +147,9 @@
                       <th>E-Mail</th>
                       <th>Vakanz</th>
                       <th>Python-NLP</th>
-                      <th>NLP-Status</th>
-                      <th>NLP-Analyse</th>
+                      <th>Node-NLP</th>
                       <th>Löschen</th>
+                      <th>NLP-Report</th>                      
                     </tr>
                   </thead>
                   <tbody>
@@ -170,9 +160,9 @@
                         <td><a href="mailto:{{email}}">{{email}}</a></td>
                         <td>{{#each origins}}{{this.title}}{{/each}}</td>
                         <td><a href="/nlp/python/{{_id}}" class="btn btn-sm btn-outline-secondary">analysieren</a></td>
-                        <td><a href="/nlp/view/{{_id}}" data-id="{{_id}}" class="nlp-view"><i class="fas fa-{{output.status}} fa-lg" style="text-align: center;"></i></a></td>
                         <td><a href="/nlp/analyze/{{_id}}" class="btn btn-sm btn-outline-secondary">analysieren</a></td>
                         <td><a href="" class="applicant-delete"><i class="fas fa-trash fa-lg" data-id="{{_id}}"></i></a></td>
+                        <td><a href="/nlp/view/{{_id}}" data-id="{{_id}}" class="nlp-view"><i class="fas fa-{{output.status}} fa-lg" style="text-align: center;"></i></a></td>
                       </tr>
                     {{/ users}}
                   </tbody>

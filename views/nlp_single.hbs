@@ -37,7 +37,7 @@
   <body>      
       <!-- Header -->
       <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top shadow-sm">
-        <a class="navbar-brand" href="#">iEmployee</a>
+        <a class="navbar-brand" href="/">iEmployee</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#dashboardNavigation" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -57,16 +57,6 @@
                 <span class="dropdown-item-text"><b>Externe Ansicht</b></span>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="/jobs">Übersicht</a>                
-              </div>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">NLP-Interface</a>    
-              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <span class="dropdown-item-text"><b>Node.js</b></span>
-                <a class="dropdown-item" href="#">TF-IDF</a>
-                <span class="dropdown-item-text"><b>Python</b></span>
-                <a class="dropdown-item" href="#">Syntax Analysis</a>
-                <a class="dropdown-item" href="#">Sentiment Analysis</a>
               </div>
             </li>
             <li class="nav-item dropdown">
@@ -97,7 +87,7 @@
       </nav>
 
 
-<section class="jumbotron jumbotron-fluid jumbo-wrapper" style="padding-top: 120px;">
+<section class="jumbotron jumbotron-fluid jumbo-wrapper-new" style="padding-top: 120px;">
     <div class="container">
         <div class="row">
             <div class="col-md-9 offset-md-3">
@@ -146,8 +136,7 @@
         <div class="row">
             <div class="col-md-3" style="text-align: right;">
                 <h2>Bio</h2>
-                <div style="font-size: .75em;">Removed: <span>208</span> Characters</div>
-                <div style="font-size: .75em;">Score: <span></span></div>
+                <div style="font-size: .75em;" class="score">Removed: <span>208</span> Characters</div>
             </div>
             <div class="col-md-6">
                 <div id="bio"></div>
@@ -160,7 +149,7 @@
         <div class="row">
             <div class="col-md-3" style="text-align: right;">
                 <h2>Trie</h2>
-                <div style="font-size: .75em;">Score: <span id="triesScore">{{user.output.trie.score}}</span></div>
+                <div style="font-size: .75em;" class="score">Score: <span id="triesScore">{{user.output.trie.score}}</span></div>
             </div>
             <div class="col-md-6">
                 <div id="tries" class="table-responsive">
@@ -190,7 +179,7 @@
             <div class="row">
                 <div class="col-md-3" style="text-align: right;">
                     <h2>TF-IDF</h2>
-                    <div style="font-size: .75em;">TD-IDF Vektor</div>
+                    <div style="font-size: .75em;" class="score">TD-IDF Vektor</div>
                 </div>
                 <div class="col-md-6">
                     <div id="tries" class="table-responsive">
@@ -226,7 +215,7 @@
             <div class="row">
                 <div class="col-md-3" style="text-align: right;">
                     <h2>NER</h2>
-                    <div style="font-size: .75em;">Named Entity Recognition - StanfordNLP</div>                    
+                    <div style="font-size: .75em;" class="score">Named Entity Recognition - StanfordNLP</div>                    
                 </div>
                 <div class="col-md-6">
                     <div id="organisation" class="list-group">

@@ -177,7 +177,39 @@ li.tree-item div {
   background-position: center center;
 }
 
+.jumbo-wrapper-new {
+  background-image: url('/img/bg2.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;  
+}
+
 /* NLP Single View */
 #myTable_info {
   display: none;
+}
+
+@media (max-width: 576px) {
+
+  h2 {
+    text-align: left !important;
+    line-height: 18px;
+  }
+
+  #myTable_length,
+  #myTable_filter {
+    display: none;
+  }
+
+  .score {
+    text-align: left !important;
+    margin-bottom: 0.5em;
+    margin-left: 0.2em;
+  }
+
+  #bio {
+    border: 1px solid rgba(0,0,0,.125);
+    padding: 0.5em;
+  }
+
 }
