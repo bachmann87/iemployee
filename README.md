@@ -179,6 +179,19 @@ function recursiveIter(obj, entity) {
 }
 ```
 
+Die Funktion StanfordNLP Entity Recognition
+```javascript
+// GET - Entity Recognition
+algorithmia.client("simYi/0ziOKGNge4PedKMON0lT81")
+    .algo("StanfordNLP/Java2NER/0.1.1")
+    .pipe(corpus[1])
+    .then(function(data) {
+        var keys = Object.keys(data.result);
+        entResOrg = recursiveIter(data.result, 'ORGANIZATION');
+        entResLoc = recursiveIter(data.result, 'LOCATION');
+    });
+```
+
 # Funktionen Dateisystem
 > Nebst den Hauptfunktionen für die NLP-Aufgaben, gibt es auch weitere Funktionen, die für das Lehrprojekt wichtig waren. Nachfolgend alle Funktionen mit dem Dateisystem:
 
@@ -256,7 +269,7 @@ function _python_nltk(req, res, user) {
 
 }
 ```
-Das Python-Skript nutzt NLTK als Natural Language Processing Bibliothek und ermöglicht eine Segementierung. Nachfolgend das Python Skript: 
+Das Python-Skript nutzt NLTK als Natural Language Processing Bibliothek und ermöglicht eine Segmentierung. Nachfolgend das Python-Skript: 
 
 ```python
 #!/usr/bin/env python
@@ -273,6 +286,7 @@ rf = sys.argv[3]
 print(word_tokenize(ml))
 ```
 > Falls die Applikation lokal getestet wird, dann muss Python 3.6 auf dem System installiert sein.
+
 
 # Routing
 Aufgrund der Applikationsgrösse wurde ein URL-Routing-Verfahren angewendet. Der Vorteil eines Routers ist die Separation der verschiedenen Serverdateien. Dies hat zufolge, dass der gesamte Source Code der Applikation übersichtlicher gestaltet werden kann. Der Dateipfad für die Scripts ist ``/routes``. Nachfolgend alle verwendeten Server-Router: 
@@ -296,6 +310,19 @@ Das Debugging der veröffentlichten Version auf Heroku funktioniert wie folgt:
 2. Nach erfolgreicher Installation Befehlskonsole (cmd) öffnen und ``heroku login`` eingeben.
 3. Benutzername: ``info@ajaybachmann.ch`` und Passwort: ``q2w3p0o9ZZ!`` eingeben.
 4. Debug-Log aufrufen mit: ``heroku logs --tail -a iemployee``
+
+# Testdaten
+
+Die Applikation verfügt über Testdaten, damit die NLP-Funktionen getestet werden können. Nachfolgend die Struktur des Ordners ``Testdaten``
+
+```
+Testdaten/
+├── Anschreiben.docx
+├── Lebenslauf.docx
+└── Arbeitszeugnis.docx
+```
+
+> In der Node.js-Community findet man gegenwärtig nur wenige NLP-Bibliotheken für die deutsche Sprache. Aus diesem Grund wurden explizit NLP-Bibliotheken für die **englische Sprache** verwendet.
 
 # License
 Copyright (c) 2018 Allan Bachmann
