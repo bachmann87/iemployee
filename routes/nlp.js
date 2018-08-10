@@ -80,20 +80,41 @@ router.get('/analyze/:id', (request, response) => {
             let corpus = get_corpus(users.nlp.input.ml);
             let cleanText = sentence.tokenize(corpus[1]);
             let tokens = words.tokenize(corpus[1]);
-            
+
+            // ----------------------------
             // GET - Digital Trie per Token
+            // ----------------------------
+
             let result = _get_digital_trie(tags, tokens);
             let len = corpus[1].length;
             let ratio = cleanText.length / len * 100;
             // console.log(tokens.length/cleanText.length);
 
             // GET - Tf-idf
+            // tfidf.addDocument(corpus[1]);
+            // tfidf.listTerms(0).forEach(function(item) {
+            //     tfidfResult[item.term] = item.tfidf;
+            // });
+            // let tfidfScore = _get_tfidf_score(tfidfResult);
+            // console.log(tfidfScore);
+
+            // ----------------------------
+            // GET - TF-IDF
+            // ----------------------------
+
+            // Get Length of Document Collection
+            let keys = Object.keys(users.nlp.input)
+            // Add all Documents
             tfidf.addDocument(corpus[1]);
-            tfidf.listTerms(0).forEach(function(item) {
-                tfidfResult[item.term] = item.tfidf;
-            });
-            let tfidfScore = _get_tfidf_score(tfidfResult);
-            console.log(tfidfScore);
+            tfidf.addDocument(users.nlp.input.cv);
+            tfidf.addDocument(users.nlp.input.rf);
+            // TF-IDF Vectorize for entire document collection
+            for(let i=0;i<keys.length;i++) {
+                tfidf.listTerms(i).forEach(function(item) {
+                    tfidfResult[item.term] = item.tfidf;
+                });
+            }
+            // _tfidf_vec(corpus[1], users);
 
             // GET - Sentiment
             let sentiment = {};
@@ -101,7 +122,10 @@ router.get('/analyze/:id', (request, response) => {
                 sentiment[tokens[i]] = ml.classify(tokens[i]);
             }
             
-            // GET - Entity Recognition
+            // ---------------------------------
+            // GET - Stanford Entity Recognition
+            // ---------------------------------
+
             algorithmia.client("simYi/0ziOKGNge4PedKMON0lT81")
                 .algo("StanfordNLP/Java2NER/0.1.1")
                 .pipe(corpus[1])
@@ -113,8 +137,11 @@ router.get('/analyze/:id', (request, response) => {
 
                 // Wait until Stanford NLP is finished, unfortunately not chainable with then syntax
                 setTimeout(function() {
+            
+                    // ---------------------------------
+                    // GET - Summarizer
+                    // ---------------------------------
 
-                    // GET - Summary
                     for(let i=0;i<tags.length;i++) {
                         bio = _summary(tags[i], cleanText);
                     }
@@ -236,6 +263,21 @@ function _get_tfidf_score(tfidf) {
     let length = values.length;
     var max = values.reduce((a, b) => { return Math.max(a, b) });
     return max/length*100;
+}
+
+function _tfidf_vec(cleanText, users) {
+    // Get Length of Document Collection
+    let keys = Object.keys(users.nlp.input)
+    // Add all Documents
+    tfidf.addDocument(cleanText);
+    tfidf.addDocument(users.nlp.input.cv);
+    tfidf.addDocument(users.nlp.input.rf);
+    // TF-IDF Vectorize for entire document collection
+    for(let i=0;i<keys.length;i++) {
+        tfidf.listTerms(i).forEach(function(item) {
+            tfidfResult[item.term] = item.tfidf;
+        });
+    }
 }
 
 /**

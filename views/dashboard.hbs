@@ -138,22 +138,25 @@
               <hr class="my-4">
             </div>
             <div>
-              <div class="table-responsive">
-                <table class="table table-sm table-bordered table-hover">
-                  <thead>
-                    <tr>
-                      <th>Profil</th>
-                      <th>Name</th>
-                      <th>E-Mail</th>
-                      <th>Vakanz</th>
-                      <th>Python-NLP</th>
-                      <th>Node-NLP</th>
-                      <th>Löschen</th>
-                      <th>NLP-Report</th>                      
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {{# users}}
+            {{#if nousers}}
+              <div class="alert alert-danger">Es hat sich noch niemand auf die offenen Vakanzen beworben.</div>
+            {{/if}}
+                {{# users}}
+                <div class="table-responsive">
+                  <table class="table table-sm table-bordered table-hover">
+                    <thead>
+                      <tr>
+                        <th>Profil</th>
+                        <th>Name</th>
+                        <th>E-Mail</th>
+                        <th>Vakanz</th>
+                        <th>Python-NLP</th>
+                        <th>Node-NLP</th>
+                        <th>Löschen</th>
+                        <th>NLP-Report</th>                      
+                      </tr>
+                    </thead>
+                    <tbody>                    
                       <tr>
                         <td>{{_id}}</td>
                         <td>{{prename}} {{name}}</td>
@@ -163,10 +166,10 @@
                         <td><a href="/nlp/analyze/{{_id}}" class="btn btn-sm btn-outline-secondary">analysieren</a></td>
                         <td><a href="" class="applicant-delete"><i class="fas fa-trash fa-lg" data-id="{{_id}}"></i></a></td>
                         <td><a href="/nlp/view/{{_id}}" data-id="{{_id}}" class="nlp-view"><i class="fas fa-{{output.status}} fa-lg" style="text-align: center;"></i></a></td>
-                      </tr>
-                    {{/ users}}
+                      </tr>                    
                   </tbody>
                 </table>
+               {{/ users}} 
               </div>
             </div>
           </div>

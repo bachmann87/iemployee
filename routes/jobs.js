@@ -15,6 +15,7 @@ var util = require('util');
 
 // Globals
 var user = {};
+var count;
 
 // Set Router
 var router = express.Router();
@@ -199,28 +200,27 @@ router.get('/dashboard', function(req, res, next) {
       User.find({})
         .populate('origins', 'title', 'Vacancie')
         .then((users) => {
-            // Cast Obj
-            let keys = Object.keys(vacancies);
-            let datasetJobs = [];
-            let dataset1 = [];
-            let dataset2 = [];
-
-            // Iterate to Doc
-            for(let i=0;i<keys.length;i++) {
-              dataset1.push(Math.ceil(Math.random()*100));
-              dataset2.push(Math.ceil((Math.random()*20)*-1));
-              datasetJobs.push(vacancies[i].title);
-            }
-
-            // Render Page
-            res.render('dashboard', {
-              layout: false,
-              title: 'iEmployee - Dashboard',
-              vacancies: vacancies,
-              jobs: datasetJobs,
-              index_1: dataset1,
-              index_2: dataset2,
-              users: users
+            // Count document collection
+            User.find({}).count(function(err, count) {
+              // Check if applicants are available
+              if(count === 0) {
+                // Render Page
+                res.render('dashboard', {
+                  layout: false,
+                  title: 'iEmployee - Dashboard',
+                  vacancies: vacancies,
+                  users: users,
+                  nousers: true
+                });
+              } else {
+              // Render Page
+              res.render('dashboard', {
+                layout: false,
+                title: 'iEmployee - Dashboard',
+                vacancies: vacancies,
+                users: users
+                });
+              }
             });
         })
         .catch((err) => console.log(err));

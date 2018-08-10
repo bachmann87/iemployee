@@ -91,6 +91,23 @@ function get_corpus(string) {
     }
 }
 ```
+Die Funktion **_tfidf_vec(cleanText, users)** generiert einen TF-IDF Vektor von allen Dokumenten
+```javascript
+function _tfidf_vec(cleanText, users) {
+    // Get Length of Document Collection
+    let keys = Object.keys(users.nlp.input)
+    // Add all Documents
+    tfidf.addDocument(cleanText);
+    tfidf.addDocument(users.nlp.input.cv);
+    tfidf.addDocument(users.nlp.input.rf);
+    // TF-IDF Vectorize for entire document collection
+    for(let i=0;i<keys.length;i++) {
+        tfidf.listTerms(i).forEach(function(item) {
+            tfidfResult[item.term] = item.tfidf;
+        });
+    }
+}
+```
 
 Die Funktion **_get_tfidf_score()** berechnet den Score des TF-IDF Vektors
 ```javascript
@@ -106,6 +123,8 @@ function _get_tfidf_score(tfidf) {
     return max/length*100;
 }
 ```
+
+
 
 Die Funktion **_get_digital_trie** ist eine effiziente Präfix-basierende Suchfunktion.
 ```javascript
@@ -327,7 +346,7 @@ Testdaten/
 └── Arbeitszeugnis.docx
 ```
 
-> In der Node.js-Community findet man gegenwärtig nur wenige NLP-Bibliotheken für die deutsche Sprache. Aus diesem Grund wurden explizit NLP-Bibliotheken für die **englische Sprache** verwendet.
+> In der Node.js-Community findet man gegenwärtig nur wenige NLP-Bibliotheken für die deutsche Sprache. Aus diesem Grund wurden explizit NLP-Bibliotheken für die **englische Sprache** verwendet. Weiterführend muss beim Anschreiben auf folgendes RegEx-Pattern berücksichtigt werden: ``(Dear.*)\sYours.*sincerely.*$/gm``. 
 
 # License
 Copyright (c) 2018 Allan Bachmann
