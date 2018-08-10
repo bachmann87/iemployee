@@ -43,7 +43,7 @@ let db = mongoose.connection;
 
 // Check connection
 db.once('open', function() {
-  util.log(chalk.cyan.bold(`[MongoDB started] - Status: [${logSymbols.success}]`));
+  util.log(chalk.cyan.bold(`[MongoDB started] - Status: [ok]`));
 });
 
 // Check for DB-Errors

@@ -32,8 +32,13 @@ Eine kurze Anleitung wie man am besten die Applikation lokal installiert und tes
 1. Github Repository ``iemployee`` klonen
 2. Alle Abhängigkeiten installieren mit: ``npm install``
 3. Applikation starten mit: ``npm start`` oder mit ``node .\bin\server``
-4. Optional kann man einen Port-Flag angeben: ``node .\bin\server --port 8080`` Der Port ist frei wählbar - Standardport = 3000
-5. In der Konsole erscheint ``NodeApp started``, ``MongoDB started`` und ``Python started``
+4. Optional kann man einen Port-Flag angeben. Der Port ist frei wählbar: ``node .\bin\server --port 8080``
+5. In der Konsole erscheinen folgende Notifikatione: ``NodeApp started``, ``MongoDB started`` und ``Python started``
+```
+06 Aug 11:28:43 - [NodeApp started] - Status: [ok], Port: [3000]
+06 Aug 11:28:43 - [Python3 started] - Status: [ok]
+06 Aug 11:28:44 - [MongoDB started] - Status: [ok]
+```
 6. Applikation via ``localhost:port/`` aufrufen
 
 
@@ -313,7 +318,7 @@ Das Debugging der veröffentlichten Version auf Heroku funktioniert wie folgt:
 
 # Testdaten
 
-Die Applikation verfügt über Testdaten, damit die NLP-Funktionen getestet werden können. Nachfolgend die Struktur des Ordners ``Testdaten``
+Die Applikation verfügt über Testdaten, damit die NLP-Funktionen getestet werden können. Nachfolgend die Struktur des Ordners ``Testdaten``:
 
 ```
 Testdaten/

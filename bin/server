@@ -19,7 +19,7 @@ var port = normalizePort(process.env.PORT || grab('--port') || '3000');
 app.set('port', port);
 
 console.log('\n');
-util.log(chalk.yellow.bold(`[NodeApp started] - Status: [${logSymbols.success}], Port: [${port}]`));
+util.log(chalk.yellow.bold(`[NodeApp started] - Status: [ok], Port: [${port}]`));
 
 /**
  * Create HTTP server.
