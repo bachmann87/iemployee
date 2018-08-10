@@ -1,5 +1,5 @@
 <!-- Header -->
-<nav class="navbar navbar-expand-lg navbar-light shadow-sm" style="z-index: 1200;">
+<nav class="navbar navbar-expand-lg navbar-light shadow-sm" style="z-index: 1200 !important;">
   <a class="navbar-brand" href="#">iEmployee</a> 
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNavigation" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -11,10 +11,12 @@
       <a class="nav-item nav-link" href="/#product">Produkt</a>
       <a class="nav-item nav-link" href="/#twitter">Wissen</a>
       <a class="nav-item nav-link" href="/#media">Medien</a>      
+      <a class="nav-item nav-link" href="/#demo">Demoversion</a>      
       <a class="nav-item nav-link" href="/jobs">Karriere</a>
+      <a class="nav-item nav-link" href="/jobs/dashboard">Dashboard</a>
     </div>
     <div class="navbar-nav">
-      <a class="btn btn-sm btn-outline-secondary" href="/users">Sign in</a>
+      <a class="btn btn-sm btn-outline-secondary" href="#">Sign in</a>
     </div>
   </div>
 </nav>
@@ -24,13 +26,13 @@
     <div class="container text-white">
       {{# vacancies}}
       <div class="lead">{{title}}</div>
-      <div>{{body}}</div>
+      <div>{{location}}, {{fte}}%</div>
       {{/ vacancies}}
     </div>
   </div>
 </section>
 
-<section>
+<section style="margin-bottom: 2em;">
   <div class="container">
     <div class="row">    
       <div class="col-md-12">

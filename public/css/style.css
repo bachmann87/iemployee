@@ -497,6 +497,10 @@ https://github.com/silviomoreto/bootstrap-select/issues/1135
   text-align: right;
 }
 
+#demo {
+  margin-bottom: 2em;
+}
+
 /* ------------------ */
 
 /*      Queries       */
